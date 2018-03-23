@@ -1,4 +1,5 @@
 import Droppable from '../src/droppable';
+/* tslint:disable */
 
 const defaults = {
     appendStatusClasses: true,
