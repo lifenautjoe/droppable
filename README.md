@@ -22,9 +22,9 @@ Well this library does exactly that!
 
 ## Features
 
-* Restrict to single or multiple files
-* CSS class added when files are being dragged on top of the HTML element.
-* Clicking on the html element also prompts user for files.
+* Restrict drop to single or multiple files
+* CSS class added when files are being dragged on top of the HTML element
+* Clicking on the html element also prompts user for files
 * Zero dependencies
 * Tiny! (~4 KB Minified)
 
@@ -40,6 +40,9 @@ const droppable = new Droppable({
 droppable.onFilesDropped((files) => {
     console.log('Files were dropped:', files);
 });
+
+// Clean up when you're done!
+droppable.cleanUp();
 ````
 
 ## Installation
@@ -60,14 +63,14 @@ const droppable = new Droppable({
 });
 ````
 
-### Listen for files dropped
+### Listen for dropped files
 ```typescript
 droppable.onFilesDropped((files) => {
     console.log('Files were dropped:', files);
 });
 ```
 
-### Remove listener for files dropped
+### Remove listener for dropped files
 `onFilesDropped` returns a function which when called removes the event listener
 ```typescript
 const eventRemover = droppable.onFilesDropped((files) => {
@@ -88,10 +91,25 @@ Sometimes you will want to prompt the user for files without him dropping files 
 droppable.promptForFiles();
 ```
 
-### Prompt for files when clicked
+### Enable prompt for files when clicked
 **This is by default `true`**
 
 The user will be prompted for files when the droppable element is clicked
+
+```typescript
+// On instantiation
+const droppable = new Droppable({
+    element,
+    isClickable: true
+})
+
+// On runtime
+droppable.setIsClickable(true);
+```
+
+### Disable prompt for files when clicked
+
+The user won't be prompted for files when the droppable element is clicked
 
 ```typescript
 // On instantiation
@@ -101,13 +119,28 @@ const droppable = new Droppable({
 })
 
 // On runtime
-droppable.setIsClickable(true);
+droppable.setIsClickable(false);
 ```
 
-### Accept multiple dropped/selected files
+### Enable multiple files drop
 **This is by default `true`**
 
 The user will be able to drop or select multiple files.
+
+```typescript
+// On instantiation
+const droppable = new Droppable({
+    element,
+    acceptsMultipleFiles: true
+})
+
+// On runtime
+droppable.setAcceptsMultipleFiles(true);
+```
+
+### Disable multiple files drop
+
+The user will be able to drop or select one single file.
 
 ```typescript
 // On instantiation
@@ -117,13 +150,28 @@ const droppable = new Droppable({
 })
 
 // On runtime
-droppable.setAcceptsMultipleFiles(true);
+droppable.setAcceptsMultipleFiles(false);
 ```
 
-### Append CSS class when files are dragged on element
+### Enable append CSS class when files are dragged on element
 **This is by default `true`**
 
 The class `dragover` will be added to the droppable element when files are being dragged on it.
+
+```typescript
+// On instantiation
+const droppable = new Droppable({
+    element,
+    appendStatusClasses: true
+})
+
+// On runtime
+droppable.setAppendStatusClasses(true);
+```
+
+### Disable append CSS class when files are dragged on element
+
+The class `dragover` won't be added to the droppable element when files are being dragged on it.
 
 ```typescript
 // On instantiation
@@ -133,7 +181,7 @@ const droppable = new Droppable({
 })
 
 // On runtime
-droppable.setAppendStatusClasses(true);
+droppable.setAppendStatusClasses(false);
 ```
 
 
