@@ -104,7 +104,5 @@
     "typescript": "^2.6.2",
     "validate-commit-msg": "^2.12.2"
   },
-  "dependencies": {
-    "noel": "^1.0.3"
-  }
+  "dependencies": {}
 }

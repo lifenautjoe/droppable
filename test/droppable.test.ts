@@ -99,59 +99,6 @@ describe('Droppable', () => {
                 });
             });
 
-            describe('when config.eventConfig is given', () => {
-                it('should override the default eventConfig value', () => {
-                    const eventConfig = {};
-                    const element = document.createElement('div');
-                    const mock = jest.fn();
-
-                    class NoelMock {
-                        constructor(...args: any[]) {
-                            mock(...args);
-                        }
-
-                        getEvent() {}
-                    }
-
-                    const originalNoel = Droppable['Noel'];
-                    Droppable['Noel'] = NoelMock;
-
-                    new Droppable({
-                        element,
-                        eventConfig
-                    });
-
-                    expect(mock).toHaveBeenCalledWith(eventConfig);
-
-                    Droppable['Noel'] = originalNoel;
-                });
-            });
-
-            it('should call eventDispatcher.getEvent() and store it as the filesWereDroppedEvent', () => {
-                const element = document.createElement('div');
-                const fakeEvent = {
-                    on: () => {},
-                    emit: () => {}
-                };
-
-                class NoelMock {
-                    getEvent() {
-                        return fakeEvent;
-                    }
-                }
-
-                const originalNoel = Droppable['Noel'];
-                Droppable['Noel'] = NoelMock;
-
-                const droppable = new Droppable({
-                    element
-                });
-
-                expect(droppable['filesWereDroppedEvent']).toBe(fakeEvent);
-
-                Droppable['Noel'] = originalNoel;
-            });
-
             it('should call registerElementEvents() and store the events remover as elementEventsRemover', () => {
                 const eventRemover = () => {};
 
@@ -268,16 +215,28 @@ describe('Droppable', () => {
         });
 
         describe('onFilesDropped(listener)', () => {
-            it('should add the given listener to the filesWereDroppedEvent', () => {
+            it('should add the given listener to the onFilesDroppedEventListeners', () => {
                 const element = document.createElement('div');
                 const droppable = new Droppable({
                     element
                 });
-                const mockFn = jest.spyOn(droppable['filesWereDroppedEvent'], 'on');
                 const eventListener = () => {};
                 droppable.onFilesDropped(eventListener);
 
-                expect(mockFn).toHaveBeenCalledWith(eventListener);
+                expect(droppable['onFilesDroppedEventListeners']).toContain(eventListener);
+            });
+
+            it('should return a function that removes the listener when called', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const eventListener = () => {};
+                const eventRemover = droppable.onFilesDropped(eventListener);
+
+                eventRemover();
+
+                expect(droppable['onFilesDroppedEventListeners']).not.toContain(eventListener);
             });
         });
 
@@ -422,19 +381,25 @@ describe('Droppable', () => {
         });
 
         describe('emitFilesWereDropped(files)', () => {
-            it('should call filesWereDroppedEvent.emit(files)', () => {
+            it('should call the listeners in onFilesDroppedEventListeners with the files', () => {
                 const element = document.createElement('div');
                 const droppable = new Droppable({
                     element
                 });
 
-                const mockFn = spyOn(droppable['filesWereDroppedEvent'], 'emit');
+                const listeners = [jest.fn(), jest.fn(), jest.fn(), jest.fn()];
+
+                listeners.forEach(listener => {
+                    droppable['onFilesDroppedEventListeners'].push(listener);
+                });
 
                 const fakeFiles: File[] = [];
 
                 droppable['emitFilesWereDropped'](fakeFiles);
 
-                expect(mockFn).toHaveBeenCalledWith(fakeFiles);
+                listeners.forEach(listener => {
+                    expect(listener).toHaveBeenCalledWith(fakeFiles);
+                });
             });
         });
 

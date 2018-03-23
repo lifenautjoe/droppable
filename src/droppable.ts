@@ -2,12 +2,6 @@
 // import "core-js/fn/array.find"
 // ...}
 
-import Noel from 'noel';
-import { NoelEvent } from 'noel/dist/types/event';
-import { NoelConfig } from 'noel/dist/types/interfaces';
-import { NoelEventListener } from 'noel/dist/types/types';
-import { NoelEventListenerManager } from 'noel/dist/types/event-listener-manager';
-
 /**
  * @author Joel Hernandez <lifenautjoe@gmail.com>
  */
@@ -15,12 +9,9 @@ import { NoelEventListenerManager } from 'noel/dist/types/event-listener-manager
 export default class Droppable {
     private dragOverClass = 'dragover';
 
-    private static readonly Noel = Noel;
-
     private appendStatusClasses: boolean;
     private isClickable: boolean;
 
-    private filesWereDroppedEvent: NoelEvent;
     private element: HTMLElement;
 
     private elementEventsRemover: Function;
@@ -30,7 +21,7 @@ export default class Droppable {
 
     private latestDroppedFiles: File[];
 
-    private eventEmitter: Noel;
+    private onFilesDroppedEventListeners = [];
 
     constructor(config: DroppableSettings) {
         config = config || {};
@@ -50,15 +41,6 @@ export default class Droppable {
         this.setAcceptsMultipleFiles(acceptsMultipleFiles);
         this.setAppendStatusClasses(appendStatusClasses);
 
-        this.eventEmitter = new Droppable.Noel(
-            config.eventConfig || {
-                replay: true,
-                replayBufferSize: 1
-            }
-        );
-
-        this.filesWereDroppedEvent = this.eventEmitter.getEvent('drop');
-
         this.element = config.element;
         this.elementEventsRemover = this.registerElementEvents();
 
@@ -72,8 +54,12 @@ export default class Droppable {
         return input;
     }
 
-    onFilesDropped(listener: NoelEventListener): NoelEventListenerManager {
-        return this.filesWereDroppedEvent.on(listener);
+    onFilesDropped(listener: FilesWereDroppedEventListener): EventRemover {
+        this.onFilesDroppedEventListeners.push(listener);
+        return () => {
+            const listenerIndex = this.onFilesDroppedEventListeners.indexOf(listener);
+            this.onFilesDroppedEventListeners.splice(listenerIndex, 1);
+        };
     }
 
     cleanUp() {
@@ -177,7 +163,9 @@ export default class Droppable {
     }
 
     private emitFilesWereDropped(files: Array<File>) {
-        this.filesWereDroppedEvent.emit(files);
+        this.onFilesDroppedEventListeners.forEach(listener => {
+            listener(files);
+        });
     }
 
     private registerElementEventsWithDictionary(element: HTMLElement, eventNameToEventListenerDictionary: { [key: string]: EventListener }): Function {
@@ -199,3 +187,7 @@ export interface DroppableSettings {
     isClickable?: boolean;
     eventConfig?: NoelConfig;
 }
+
+export type EventRemover = () => void;
+
+export type FilesWereDroppedEventListener = (files: File[]) => any;
