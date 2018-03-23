@@ -1,64 +1,234 @@
 import Droppable from '../src/droppable';
+import { NoelEvent } from 'noel/dist/types/event';
+
+const defaults = {
+    appendStatusClasses: true,
+    isClickable: true,
+    acceptsMultipleFiles: true
+};
 
 /**
  * Droppable
  */
 describe('Droppable', () => {
+    afterEach(() => {
+        expect.hasAssertions();
+    });
+
     describe('class', () => {
         describe('makeVirtualInputElement()', () => {
-            it('should create a virtual hidden file input', () => {});
+            it('should return an HTMLInputElement of type file and display none', () => {
+                const inputElement = Droppable['makeVirtualInputElement']();
+                expect(inputElement).toBeInstanceOf(HTMLInputElement);
+                expect(inputElement.type).toBe('file');
+                expect(inputElement.style.display).toBe('none');
+            });
         });
     });
 
     describe('instance', () => {
         describe('constructor(config)', () => {
             describe('when no config.element is given', () => {
-                it('should throw an error', () => {});
+                it('should throw an error', () => {
+                    expect(() => {
+                        const droppable = new Droppable();
+                    }).toThrow();
+                });
             });
 
             describe('when config.element is given', () => {
-                it('should store it', () => {});
+                it('should store it', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+                    expect(droppable['element']).toBe(element);
+                });
             });
 
             describe('when config.appendStatusClasses is given', () => {
-                it('should call setAppendStatusClasses() with the given value', () => {});
+                it('should call setAppendStatusClasses() with the given value', () => {
+                    const mockFn = jest.spyOn(Droppable.prototype, 'setAppendStatusClasses');
+                    const appendStatusClasses = !defaults.appendStatusClasses;
+
+                    const element = document.createElement('div');
+
+                    new Droppable({
+                        element,
+                        appendStatusClasses
+                    });
+
+                    expect(mockFn).toHaveBeenCalledWith(appendStatusClasses);
+
+                    mockFn.mockRestore();
+                });
             });
 
             describe('when config.acceptsMultipleFiles is given', () => {
-                it('should call setAcceptsMultipleFiles() with the given value', () => {});
+                it('should call setAcceptsMultipleFiles() with the given value', () => {
+                    const mockFn = jest.spyOn(Droppable.prototype, 'setAcceptsMultipleFiles');
+                    const acceptsMultipleFiles = !defaults.acceptsMultipleFiles;
+
+                    const element = document.createElement('div');
+
+                    new Droppable({
+                        element,
+                        acceptsMultipleFiles
+                    });
+
+                    expect(mockFn).toHaveBeenCalledWith(acceptsMultipleFiles);
+
+                    mockFn.mockRestore();
+                });
             });
 
             describe('when config.isClickable is given', () => {
-                it('should call setIsClickeable() with the given value', () => {});
+                it('should call setIsClickable() with the given value', () => {
+                    const mockFn = jest.spyOn(Droppable.prototype, 'setIsClickable');
+                    const isClickable = !defaults.isClickable;
+
+                    const element = document.createElement('div');
+
+                    new Droppable({
+                        element,
+                        isClickable
+                    });
+
+                    expect(mockFn).toHaveBeenCalledWith(isClickable);
+
+                    mockFn.mockRestore();
+                });
             });
 
             describe('when config.eventConfig is given', () => {
-                it('should override the default eventConfig value', () => {});
+                it('should override the default eventConfig value', () => {
+                    const eventConfig = {};
+                    const element = document.createElement('div');
+                    const mock = jest.fn();
+
+                    class NoelMock {
+                        constructor(...args: any[]) {
+                            mock(...args);
+                        }
+
+                        getEvent() {}
+                    }
+
+                    const originalNoel = Droppable['Noel'];
+                    Droppable['Noel'] = NoelMock;
+
+                    new Droppable({
+                        element,
+                        eventConfig
+                    });
+
+                    expect(mock).toHaveBeenCalledWith(eventConfig);
+
+                    Droppable['Noel'] = originalNoel;
+                });
             });
 
-            describe('setAcceptsMultipleFiles(acceptsMultipleFiles: boolean)', () => {
-                it('should set the given value as the attribute "multiple" of the virtualInputElement', () => {});
+            it('should call eventDispatcher.getEvent() and store it as the filesWereDroppedEvent', () => {
+                const element = document.createElement('div');
+                const fakeEvent = {
+                    on: () => {},
+                    emit: () => {}
+                };
+
+                class NoelMock {
+                    getEvent() {
+                        return fakeEvent;
+                    }
+                }
+
+                const originalNoel = Droppable['Noel'];
+                Droppable['Noel'] = NoelMock;
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                expect(droppable['filesWereDroppedEvent']).toBe(fakeEvent);
+
+                Droppable['Noel'] = originalNoel;
             });
 
-            describe('setIsClickable(isClickable)', () => {
-                it('should set the given value as value of instance attribute isClickable', () => {});
+            it('should call registerElementEvents() and store the events remover as elementEventsRemover', () => {
+                const eventRemover = () => {};
+
+                const mockFn = jest.spyOn(Droppable.prototype, 'registerElementEvents').mockImplementation(() => {
+                    return eventRemover;
+                });
+
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                expect(mockFn).toHaveBeenCalled();
+
+                expect(droppable['elementEventsRemover']).toBe(eventRemover);
+
+                mockFn.mockRestore();
             });
 
-            describe('setAppendStatusClasses(appendStatusClasses: boolean)', () => {
-                it('should set the given value as value of instance attribute appendStatusClasses', () => {});
+            it('should call Droppable.makeVirtualInputElement() and store the result as virtualInputElement', () => {
+                const inputElement = document.createElement('input');
+
+                const mockFn = jest.spyOn(Droppable, 'makeVirtualInputElement').mockImplementation(() => {
+                    return inputElement;
+                });
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                expect(mockFn).toHaveBeenCalled();
+
+                expect(droppable['virtualInputElement']).toEqual(inputElement);
             });
 
-            describe('should create the filesWereDroppedEvent', () => {});
+            it('should call registerVirtualInputElementEvents() and store the events remover as virtualInputElementEventsRemover', () => {
+                const fakeEventRemover = () => {};
 
-            describe('should call registerElementEvents() and store the events remover as elementEventsRemover', () => {});
+                const mockFn = jest.spyOn(Droppable.prototype, 'registerVirtualInputElementEvents').mockImplementation(() => {
+                    return fakeEventRemover;
+                });
+                const element = document.createElement('div');
 
-            describe('should create the elementEventsRemover and store it', () => {});
+                const droppable = new Droppable({
+                    element
+                });
 
-            describe('should call Droppable.makeVirtualInputElement() and store the result as virtualInputElement', () => {});
+                expect(mockFn).toHaveBeenCalled();
 
-            describe('should call registerVirtualInputElementEvents() and store the events remover as virtualInputElementEventsRemover', () => {});
+                expect(droppable['virtualInputElementEventsRemover']).toEqual(fakeEventRemover);
+            });
 
-            it('should have default config values', () => {});
+            it('should have default config values', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                expect(droppable['appendStatusClasses']).toBe(defaults.appendStatusClasses);
+                expect(droppable['isClickable']).toBe(defaults.isClickable);
+                expect(droppable['virtualInputElement'].hasAttribute('multiple')).toBe(true);
+            });
+        });
+
+        describe('setAcceptsMultipleFiles(acceptsMultipleFiles: boolean)', () => {
+            it('should set the given value as the attribute "multiple" of the virtualInputElement', () => {});
+        });
+
+        describe('setIsClickable(isClickable)', () => {
+            it('should set the given value as value of instance attribute isClickable', () => {});
+        });
+
+        describe('setAppendStatusClasses(appendStatusClasses: boolean)', () => {
+            it('should set the given value as value of instance attribute appendStatusClasses', () => {});
         });
 
         describe('onFilesDropped(listener)', () => {

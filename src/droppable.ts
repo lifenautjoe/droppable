@@ -15,6 +15,8 @@ import { NoelEventListenerManager } from 'noel/dist/types/event-listener-manager
 export default class Droppable {
     private static readonly DRAG_OVER_CLASS = 'dragover';
 
+    private static readonly Noel = Noel;
+
     private appendStatusClasses: boolean;
     private isClickable: boolean;
 
@@ -37,11 +39,18 @@ export default class Droppable {
             throw new Error('config.element: HTMLElement is required');
         }
 
-        this.setIsClickeable(config.isClickable || true);
-        this.setAcceptsMultipleFiles(config.acceptsMultipleFiles || true);
-        this.setAppendStatusClasses(config.acceptsMultipleFiles || true);
+        // This must be called before calling setAcceptsMultipleFiles
+        this.virtualInputElement = Droppable.makeVirtualInputElement();
 
-        this.eventEmitter = new Noel(
+        const isClickable = typeof config.isClickable === 'boolean' ? config.isClickable : true;
+        const acceptsMultipleFiles = typeof config.acceptsMultipleFiles === 'boolean' ? config.acceptsMultipleFiles : true;
+        const appendStatusClasses = typeof config.appendStatusClasses === 'boolean' ? config.appendStatusClasses : true;
+
+        this.setIsClickable(isClickable);
+        this.setAcceptsMultipleFiles(acceptsMultipleFiles);
+        this.setAppendStatusClasses(appendStatusClasses);
+
+        this.eventEmitter = new Droppable.Noel(
             config.eventConfig || {
                 replay: true,
                 replayBufferSize: 1
@@ -52,8 +61,6 @@ export default class Droppable {
 
         this.element = config.element;
         this.elementEventsRemover = this.registerElementEvents();
-
-        this.virtualInputElement = Droppable.makeVirtualInputElement();
 
         this.virtualInputElementEventsRemover = this.registerVirtualInputElementEvents();
     }
@@ -82,8 +89,8 @@ export default class Droppable {
         this.virtualInputElement.click();
     }
 
-    setIsClickeable(clickeable: boolean) {
-        this.isClickable = clickeable;
+    setIsClickable(clickable: boolean) {
+        this.isClickable = clickable;
     }
 
     setAcceptsMultipleFiles(acceptsMultipleFiles: boolean) {
