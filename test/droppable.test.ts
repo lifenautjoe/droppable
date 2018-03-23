@@ -61,8 +61,8 @@ describe('Droppable', () => {
             it('should have default config values', () => {});
         });
 
-        describe('onFilesDropped()', () => {
-            it('should add the listener to the filesWereDroppedEvent', () => {});
+        describe('onFilesDropped(listener)', () => {
+            it('should add the given listener to the filesWereDroppedEvent', () => {});
         });
 
         describe('getLatestDroppedFiles()', () => {
@@ -76,11 +76,69 @@ describe('Droppable', () => {
         });
 
         describe('promptForFiles()', () => {
-            it('should trigger a click on virtualInputElement', () => {});
+            it('should trigger a click on the virtualInputElement', () => {});
         });
 
-        describe('setAppendStatusClasses()', () => {
-            it('should set the attribute appendStatusClasses', () => {});
+        describe('registerVirtualInputElementEvents()', () => {
+            it(`should get the virtual input element eventsDictionary and call registerElementEventsWithDictionary(this.virtualInputElement, eventsDictionary)`, () => {});
+        });
+
+        describe('registerElementEvents()', () => {
+            it(`should get the element eventsDictionary and call registerElementEventsWithDictionary(this.element, eventsDictionary)`, () => {});
+        });
+
+        describe('setLatestDrop(files)', () => {
+            it('should set latestDroppedFiles to the given value', () => {});
+
+            it('should call emitFilesWereDropped(files)', () => {});
+        });
+
+        describe('emitFilesWereDropped(files)', () => {
+            it('should call filesWereDroppedEvent.emit(files)', () => {});
+        });
+
+        describe('onElementClick()', () => {
+            describe('when isClickable is true', () => {
+                it('should call promptForFiles()', () => {});
+            });
+
+            describe('when isClickable is false', () => {
+                it('should not call promptForFiles()', () => {});
+            });
+        });
+
+        describe('onElementDragOver(event)', () => {
+            it('should call event.preventDefault()', () => {});
+
+            it('should call event.stopPropagation()', () => {});
+
+            it('should add the Droppable.DRAG_OVER_CLASS', () => {});
+        });
+
+        describe('onElementDragLeave(event)', () => {
+            it('should call event.preventDefault()', () => {});
+
+            it('should call event.stopPropagation()', () => {});
+
+            it('should remove the Droppable.DRAG_OVER_CLASS', () => {});
+        });
+
+        describe('onVirtualInputElementChange(event)', () => {
+            it('should call onDroppableElementChange(event)', () => {});
+        });
+
+        describe('onDroppableElementChange(event)', () => {
+            describe('when the event has dataTransfer', () => {
+                it('should grab the files from event.dataTransfer.files', () => {});
+            });
+
+            describe('when the event has a target', () => {
+                it('should grab the Files from event.target.files', () => {});
+            });
+
+            describe('when the event has neither dataTransfer nor target', () => {
+                it('should throw an Error', () => {});
+            });
         });
 
         describe('cleanUp()', () => {
@@ -89,8 +147,18 @@ describe('Droppable', () => {
             it('should call the virtualInputElementEventsRemover', () => {});
         });
 
-        describe('registerElementEventsWithEventNameToEventListenerDictionary(element: HTMLElement, eventNameToEventListenerDictionary)', () => {
+        describe('getVirtualInputElementEventsDictionary()', () => {
+            it('should return a dictionary with change as key and its matching event listener as value', () => {});
+        });
+
+        describe('getElementEventsDictionary()', () => {
+            it('should return a dictionary with dragover, dragleave, drop and click as keys and their matching event listeners as values', () => {});
+        });
+
+        describe('registerElementEventsWithDictionary(element: HTMLElement, eventNameToEventListenerDictionary)', () => {
             it('should register the given event names with matching listeners on the element', () => {});
+
+            it('should return a function that removes all events from the element when called', () => {});
         });
     });
 });
