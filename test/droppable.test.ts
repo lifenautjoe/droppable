@@ -1,5 +1,4 @@
 import Droppable from '../src/droppable';
-import { NoelEvent } from 'noel/dist/types/event';
 
 const defaults = {
     appendStatusClasses: true,
@@ -220,15 +219,48 @@ describe('Droppable', () => {
         });
 
         describe('setAcceptsMultipleFiles(acceptsMultipleFiles: boolean)', () => {
-            it('should set the given value as the attribute "multiple" of the virtualInputElement', () => {});
+            it('should set the given value as the attribute "multiple" of the virtualInputElement', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const acceptsMultipleFiles = !defaults.acceptsMultipleFiles;
+
+                droppable.setAcceptsMultipleFiles(acceptsMultipleFiles);
+
+                expect(droppable['virtualInputElement'].getAttribute('multiple')).toBe(acceptsMultipleFiles.toString());
+            });
         });
 
         describe('setIsClickable(isClickable)', () => {
-            it('should set the given value as value of instance attribute isClickable', () => {});
+            it('should set the given value as value of instance attribute isClickable', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const isClickable = !defaults.isClickable;
+
+                droppable.setIsClickable(isClickable);
+
+                expect(droppable['isClickable']).toBe(isClickable);
+            });
         });
 
         describe('setAppendStatusClasses(appendStatusClasses: boolean)', () => {
-            it('should set the given value as value of instance attribute appendStatusClasses', () => {});
+            it('should set the given value as value of instance attribute appendStatusClasses', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const appendStatusClasses = !defaults.appendStatusClasses;
+
+                droppable.setAppendStatusClasses(appendStatusClasses);
+
+                expect(droppable['appendStatusClasses']).toBe(appendStatusClasses);
+            });
         });
 
         describe('onFilesDropped(listener)', () => {
