@@ -21,7 +21,7 @@ export default class Droppable {
 
     private latestDroppedFiles: File[];
 
-    private onFilesDroppedEventListeners = [];
+    private onFilesDroppedEventListeners: FilesWereDroppedEventListener[] = [];
 
     constructor(config: DroppableSettings) {
         config = config || {};
