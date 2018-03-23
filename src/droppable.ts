@@ -28,7 +28,7 @@ export default class Droppable {
     private virtualInputElement: HTMLInputElement;
     private virtualInputElementEventsRemover: Function;
 
-    private latestDroppedFiles: File[] = [];
+    private latestDroppedFiles: File[];
 
     private eventEmitter: Noel;
 
@@ -82,7 +82,10 @@ export default class Droppable {
     }
 
     getLatestDroppedFiles(): File[] {
-        return this.latestDroppedFiles || [];
+        if (this.latestDroppedFiles) {
+            return this.latestDroppedFiles;
+        }
+        return [];
     }
 
     promptForFiles(): void {
@@ -155,10 +158,10 @@ export default class Droppable {
 
     private onDroppableElementChange(event: { [key: string]: any }) {
         let files;
-        if (event.dataTransfer) {
-            files = event.dataTransfer.files;
-        } else if (event.target) {
-            files = event.target.files;
+        if (event['dataTransfer']) {
+            files = event['dataTransfer'].files;
+        } else if (event['target']) {
+            files = event['target'].files;
         } else {
             throw Error('Fired event contains no files');
         }
@@ -179,7 +182,6 @@ export default class Droppable {
 
     private registerElementEventsWithDictionary(element: HTMLElement, eventNameToEventListenerDictionary: { [key: string]: EventListener }): Function {
         const eventRemovers: Array<Function> = [];
-
         Object.keys(eventNameToEventListenerDictionary).forEach(eventName => {
             const eventListener = eventNameToEventListenerDictionary[eventName];
             element.addEventListener(eventName, eventListener.bind(this));

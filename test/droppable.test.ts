@@ -546,8 +546,6 @@ describe('Droppable', () => {
                     element
                 });
 
-                element.classList.add(droppable['dragOverClass']);
-
                 droppable['onElementDragLeave'](fakeEvent);
 
                 expect(fakeEvent.stopPropagation).toHaveBeenCalled();
@@ -559,9 +557,79 @@ describe('Droppable', () => {
                     element
                 });
 
+                element.classList.add(droppable['dragOverClass']);
+
                 droppable['onElementDragLeave'](fakeEvent);
 
                 expect(element.classList.contains(droppable['dragOverClass'])).toBe(false);
+            });
+        });
+
+        describe('onElementDrop(event)', () => {
+            let fakeEvent: any;
+
+            beforeEach(() => {
+                fakeEvent = {
+                    preventDefault: jest.fn(),
+                    stopPropagation: jest.fn()
+                };
+            });
+
+            it('should call event.preventDefault()', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                jest.spyOn(droppable, 'onDroppableElementChange').mockImplementation(() => {});
+
+                droppable['onElementDrop'](fakeEvent);
+
+                expect(fakeEvent.preventDefault).toHaveBeenCalled();
+            });
+
+            it('should call event.stopPropagation()', () => {
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                jest.spyOn(droppable, 'onDroppableElementChange').mockImplementation(() => {});
+
+                droppable['onElementDrop'](fakeEvent);
+
+                expect(fakeEvent.stopPropagation).toHaveBeenCalled();
+            });
+
+            it('should remove the dragOverClass from the element', () => {
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                jest.spyOn(droppable, 'onDroppableElementChange').mockImplementation(() => {});
+
+                element.classList.add(droppable['dragOverClass']);
+
+                droppable['onElementDrop'](fakeEvent);
+
+                expect(element.classList.contains(droppable['dragOverClass'])).toBe(false);
+            });
+
+            it('should call onDroppableElementChange(event)', () => {
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                const mockFn = jest.spyOn(droppable, 'onDroppableElementChange').mockImplementation(() => {});
+
+                droppable['onElementDrop'](fakeEvent);
+
+                expect(mockFn).toHaveBeenCalledWith(fakeEvent);
             });
         });
 
@@ -637,28 +705,148 @@ describe('Droppable', () => {
             });
 
             describe('when the event has neither dataTransfer nor target', () => {
-                it('should throw an Error', () => {});
+                it('should throw an Error', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    expect(() => {
+                        droppable['onDroppableElementChange']({});
+                    }).toThrow();
+                });
             });
         });
 
         describe('cleanUp()', () => {
-            it('should call the elementEventsRemover', () => {});
+            it('should call the elementEventsRemover', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
 
-            it('should call the virtualInputElementEventsRemover', () => {});
+                const mockFn = spyOn(droppable, 'virtualInputElementEventsRemover');
+
+                droppable.cleanUp();
+
+                expect(mockFn).toHaveBeenCalled();
+            });
+
+            it('should call the virtualInputElementEventsRemover', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const mockFn = jest.spyOn(droppable, 'elementEventsRemover');
+
+                droppable.cleanUp();
+
+                expect(mockFn).toHaveBeenCalled();
+            });
         });
 
         describe('getVirtualInputElementEventsDictionary()', () => {
-            it('should return a dictionary with change as key and its matching event listener as value', () => {});
+            it('should return a dictionary with change as key and its matching event listener as value', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const result = droppable['getVirtualInputElementEventsDictionary']();
+
+                expect(result['change']).toEqual(droppable['onVirtualInputElementChange']);
+            });
         });
 
         describe('getElementEventsDictionary()', () => {
-            it('should return a dictionary with dragover, dragleave, drop and click as keys and their matching event listeners as values', () => {});
+            it('should return a dictionary with dragover, dragleave, drop and click as keys and their matching event listeners as values', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const result = droppable['getElementEventsDictionary']();
+
+                expect(result['dragover']).toEqual(droppable['onElementDragOver']);
+                expect(result['dragleave']).toEqual(droppable['onElementDragLeave']);
+                expect(result['drop']).toEqual(droppable['onElementDrop']);
+                expect(result['click']).toEqual(droppable['onElementClick']);
+            });
         });
 
         describe('registerElementEventsWithDictionary(element: HTMLElement, eventNameToEventListenerDictionary)', () => {
-            it('should register the given event names with matching listeners on the element', () => {});
+            it('should register the given event names with matching listeners on the element', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
 
-            it('should return a function that removes all events from the element when called', () => {});
+                const eventsDictionary = {
+                    testEvent() {
+                        return this;
+                    },
+                    anotherTestEvent() {
+                        return this;
+                    }
+                };
+
+                const addedListeners = {};
+
+                const fakeElement = document.createElement('div');
+
+                const addEventListenerMockFn = jest.spyOn(fakeElement, 'addEventListener').mockImplementation((event, listener) => {
+                    addedListeners[event] = listener;
+                });
+
+                droppable['registerElementEventsWithDictionary'](fakeElement, eventsDictionary);
+
+                const eventKeys = Object.keys(eventsDictionary);
+                expect(addEventListenerMockFn).toHaveBeenCalledTimes(eventKeys.length);
+
+                eventKeys.forEach(key => {
+                    expect(addedListeners[key]).toBeDefined();
+                    // Test functions are bound
+                    const listenerResult = addedListeners[key]();
+                    expect(listenerResult).toEqual(droppable);
+                });
+            });
+
+            it('should return a function that removes all events from the element when called', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const eventsDictionary = {
+                    testEvent() {},
+                    anotherTestEvent() {}
+                };
+
+                const fakeElement = document.createElement('div');
+
+                const addedListeners = [];
+
+                jest.spyOn(fakeElement, 'addEventListener').mockImplementation((event, listener) => {
+                    addedListeners[event] = listener;
+                });
+
+                const removeEventListenerMockFn = jest.spyOn(fakeElement, 'removeEventListener').mockImplementation(key => {
+                    delete addedListeners[key];
+                });
+
+                const result = droppable['registerElementEventsWithDictionary'](fakeElement, eventsDictionary);
+
+                result();
+
+                const eventKeys = Object.keys(eventsDictionary);
+
+                expect(removeEventListenerMockFn).toHaveBeenCalledTimes(eventKeys.length);
+
+                eventKeys.forEach(key => {
+                    expect(addedListeners[key]).not.toBeDefined();
+                });
+            });
         });
     });
 });
