@@ -185,7 +185,6 @@ export interface DroppableSettings {
     appendStatusClasses?: boolean;
     acceptsMultipleFiles?: boolean;
     isClickable?: boolean;
-    eventConfig?: NoelConfig;
 }
 
 export type EventRemover = () => void;
