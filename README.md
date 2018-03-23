@@ -1,3 +1,5 @@
+# droppable
+
 A library to give file dropping abilities to any HTML element.
 
 [![Build Status](https://travis-ci.org/lifenautjoe/droppable.svg?branch=master)](https://travis-ci.org/lifenautjoe/droppable) ![Human Friendly](https://img.shields.io/badge/human-friendly-brightgreen.svg) [![Coverage Status](https://coveralls.io/repos/github/lifenautjoe/droppable/badge.svg?branch=master)](https://coveralls.io/github/lifenautjoe/droppable?branch=master)
@@ -33,8 +35,8 @@ This library does just that 🎉
 ## Features
 
 * Restrict drop to single or multiple files
-* CSS class added when files are being dragged on top of the HTML element
-* Clicking on the html element also prompts user for files
+* CSS class added when files are being dragged on top of the HTML element (configurable)
+* Clicking on the html element also prompts user for files (configurable)
 * Zero dependencies
 * Tiny! (~4 KB Minified)
 
