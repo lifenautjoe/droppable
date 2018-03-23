@@ -475,32 +475,142 @@ describe('Droppable', () => {
         });
 
         describe('onElementDragOver(event)', () => {
-            it('should call event.preventDefault()', () => {});
+            let fakeEvent: any;
 
-            it('should call event.stopPropagation()', () => {});
+            beforeEach(() => {
+                fakeEvent = {
+                    preventDefault: jest.fn(),
+                    stopPropagation: jest.fn()
+                };
+            });
 
-            it('should add the Droppable.DRAG_OVER_CLASS', () => {});
+            it('should call event.preventDefault()', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable['onElementDragOver'](fakeEvent);
+
+                expect(fakeEvent.preventDefault).toHaveBeenCalled();
+            });
+
+            it('should call event.stopPropagation()', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable['onElementDragOver'](fakeEvent);
+
+                expect(fakeEvent.stopPropagation).toHaveBeenCalled();
+            });
+
+            it('should add the dragOverClass to the element', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable['onElementDragOver'](fakeEvent);
+
+                expect(element.classList.contains(droppable['dragOverClass'])).toBe(true);
+            });
         });
 
         describe('onElementDragLeave(event)', () => {
-            it('should call event.preventDefault()', () => {});
+            let fakeEvent: any;
 
-            it('should call event.stopPropagation()', () => {});
+            beforeEach(() => {
+                fakeEvent = {
+                    preventDefault: jest.fn(),
+                    stopPropagation: jest.fn()
+                };
+            });
 
-            it('should remove the Droppable.DRAG_OVER_CLASS', () => {});
+            it('should call event.preventDefault()', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable['onElementDragLeave'](fakeEvent);
+
+                expect(fakeEvent.preventDefault).toHaveBeenCalled();
+            });
+
+            it('should call event.stopPropagation()', () => {
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                element.classList.add(droppable['dragOverClass']);
+
+                droppable['onElementDragLeave'](fakeEvent);
+
+                expect(fakeEvent.stopPropagation).toHaveBeenCalled();
+            });
+
+            it('should remove the dragOverClass from the element', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable['onElementDragLeave'](fakeEvent);
+
+                expect(element.classList.contains(droppable['dragOverClass'])).toBe(false);
+            });
         });
 
         describe('onVirtualInputElementChange(event)', () => {
-            it('should call onDroppableElementChange(event)', () => {});
+            it('should call onDroppableElementChange(event)', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const mockFn = jest.spyOn(droppable, 'onDroppableElementChange').mockImplementation(() => {});
+
+                const fakeEvent = {};
+
+                droppable['onVirtualInputElementChange'](fakeEvent);
+
+                expect(mockFn).toHaveBeenCalledWith(fakeEvent);
+            });
         });
 
         describe('onDroppableElementChange(event)', () => {
             describe('when the event has dataTransfer', () => {
-                it('should grab the files from event.dataTransfer.files', () => {});
+                it('should call setLatestDrop with the files from event.dataTransfer.files', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    let files;
+                    const mockFn = jest.spyOn(droppable, 'setLatestDrop').mockImplementation(filesArray => {
+                        files = filesArray;
+                    });
+
+                    const file = new Blob([], { type: 'text/csv' });
+
+                    const fakeEvent = {
+                        dataTransfer: {
+                            files: [file]
+                        }
+                    };
+
+                    droppable['onDroppableElementChange'](fakeEvent);
+
+                    expect(mockFn).toHaveBeenCalled();
+                    expect(files).toContain(file);
+                });
             });
 
             describe('when the event has a target', () => {
-                it('should grab the Files from event.target.files', () => {});
+                it('should call setLatestDrop wit the files from event.target.files', () => {});
             });
 
             describe('when the event has neither dataTransfer nor target', () => {

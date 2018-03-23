@@ -13,7 +13,7 @@ import { NoelEventListenerManager } from 'noel/dist/types/event-listener-manager
  */
 
 export default class Droppable {
-    private static readonly DRAG_OVER_CLASS = 'dragover';
+    private dragOverClass = 'dragover';
 
     private static readonly Noel = Noel;
 
@@ -129,19 +129,19 @@ export default class Droppable {
     private onElementDragOver(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.add(Droppable.DRAG_OVER_CLASS);
+        this.element.classList.add(this.dragOverClass);
     }
 
     private onElementDragLeave(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.remove(Droppable.DRAG_OVER_CLASS);
+        this.element.classList.remove(this.dragOverClass);
     }
 
     private onElementDrop(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.remove(Droppable.DRAG_OVER_CLASS);
+        this.element.classList.remove(this.dragOverClass);
         this.onDroppableElementChange(e);
     }
 
@@ -159,6 +159,8 @@ export default class Droppable {
             files = event.dataTransfer.files;
         } else if (event.target) {
             files = event.target.files;
+        } else {
+            throw Error('Fired event contains no files');
         }
 
         // Files is FileList, we convert to array
