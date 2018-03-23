@@ -1,4 +1,4 @@
-A library to give file dropping/selecting abilities to any HTML element.
+A library to give file dropping abilities to any HTML element.
 
 [![Build Status](https://travis-ci.org/lifenautjoe/droppable.svg?branch=master)](https://travis-ci.org/lifenautjoe/droppable) ![Human Friendly](https://img.shields.io/badge/human-friendly-brightgreen.svg) [![Coverage Status](https://coveralls.io/repos/github/lifenautjoe/droppable/badge.svg?branch=master)](https://coveralls.io/github/lifenautjoe/droppable?branch=master)
 
@@ -6,19 +6,29 @@ A library to give file dropping/selecting abilities to any HTML element.
 
 - [Motivation](#motivation)
 - [Features](#features)
+- [Basic usage](#basic-usage)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Advanced usage](#advanced-usage)
+  * [Create a droppable element](#create-a-droppable-element)
+  * [Listen for dropped files](#listen-for-dropped-files)
+  * [Remove listener for dropped files](#remove-listener-for-dropped-files)
+  * [Get the latest dropped files](#get-the-latest-dropped-files)
+  * [Trigger prompt for files](#trigger-prompt-for-files)
+  * [Enable prompt for files when clicked](#enable-prompt-for-files-when-clicked)
+  * [Disable prompt for files when clicked](#disable-prompt-for-files-when-clicked)
+  * [Enable multiple files drop](#enable-multiple-files-drop)
+  * [Disable multiple files drop](#disable-multiple-files-drop)
+  * [Enable append CSS class when files are dragged on element](#enable-append-css-class-when-files-are-dragged-on-element)
+  * [Disable append CSS class when files are dragged on element](#disable-append-css-class-when-files-are-dragged-on-element)
+  * [Clean up](#clean-up)
 - [Development](#development)
   * [Clone the repository](#clone-the-repository)
-  * [Use npm commands](#use-npm-commands)
 
 ## Motivation
 
-Wouldn't it be great if you could give any HTML element the ability of dropping files in it or clicking it to select the files to drop in it?
+Wouldn't it be great if you could drop files in any HTML element and retrieve them by listening to a simple event?
 
-And what's better, that you could retrieve these files by listening to an event?
-
-Well this library does exactly that!
+This library does just that 🎉
 
 ## Features
 
@@ -185,7 +195,7 @@ droppable.setAppendStatusClasses(false);
 ```
 
 
-### Clean up event listeners
+### Clean up
 The library attaches several events to the HTML element which is made droppable.
 When you're done remember to call the `cleanUp` function
 ```typescript
