@@ -13,6 +13,8 @@ import { NoelEventListenerManager } from 'noel/dist/types/event-listener-manager
  */
 
 export default class Droppable {
+    private static readonly DRAG_OVER_CLASS = 'dragover';
+
     private appendStatusClasses: boolean;
     private isClickable: boolean;
 
@@ -53,7 +55,7 @@ export default class Droppable {
 
         this.virtualInputElement = Droppable.makeVirtualInputElement();
 
-        this.virtualInputElementEventsRemover = this.registerVritualInputElementEvents();
+        this.virtualInputElementEventsRemover = this.registerVirtualInputElementEvents();
     }
 
     private static makeVirtualInputElement() {
@@ -93,46 +95,46 @@ export default class Droppable {
     }
 
     private registerElementEvents(): Function {
-        const eventNameToEventListenerDictionary = this.getElementEventNameToEventListenerDictionary();
-        return this.registerElementEventsWithEventNameToEventListenerDictionary(this.element, eventNameToEventListenerDictionary);
+        const eventNameToEventListenerDictionary = this.getElementEventsDictionary();
+        return this.registerElementEventsWithDictionary(this.element, eventNameToEventListenerDictionary);
     }
 
-    private registerVritualInputElementEvents(): Function {
-        const eventNameToEventListenerDictionary = this.getVirtualInputElementEventNameToEventListenerDictionary();
-        return this.registerElementEventsWithEventNameToEventListenerDictionary(this.virtualInputElement, eventNameToEventListenerDictionary);
+    private registerVirtualInputElementEvents(): Function {
+        const eventNameToEventListenerDictionary = this.getVirtualInputElementEventsDictionary();
+        return this.registerElementEventsWithDictionary(this.virtualInputElement, eventNameToEventListenerDictionary);
     }
 
-    private getVirtualInputElementEventNameToEventListenerDictionary() {
+    private getVirtualInputElementEventsDictionary() {
         return {
             change: this.onVirtualInputElementChange
         };
     }
 
-    private getElementEventNameToEventListenerDictionary() {
+    private getElementEventsDictionary() {
         return {
-            dragover: this.onElementDragover,
+            dragover: this.onElementDragOver,
             dragleave: this.onElementDragLeave,
             drop: this.onElementDrop,
             click: this.onElementClick
         };
     }
 
-    private onElementDragover(e: Event) {
+    private onElementDragOver(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.add('dragover');
+        this.element.classList.add(Droppable.DRAG_OVER_CLASS);
     }
 
     private onElementDragLeave(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.remove('dragover');
+        this.element.classList.remove(Droppable.DRAG_OVER_CLASS);
     }
 
     private onElementDrop(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.remove('dragover');
+        this.element.classList.remove(Droppable.DRAG_OVER_CLASS);
         this.onDroppableElementChange(e);
     }
 
@@ -166,7 +168,7 @@ export default class Droppable {
         this.filesWereDroppedEvent.emit(files);
     }
 
-    private registerElementEventsWithEventNameToEventListenerDictionary(element: HTMLElement, eventNameToEventListenerDictionary: { [key: string]: EventListener }): Function {
+    private registerElementEventsWithDictionary(element: HTMLElement, eventNameToEventListenerDictionary: { [key: string]: EventListener }): Function {
         const eventRemovers: Array<Function> = [];
 
         Object.keys(eventNameToEventListenerDictionary).forEach(eventName => {
