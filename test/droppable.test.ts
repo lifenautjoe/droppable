@@ -187,6 +187,8 @@ describe('Droppable', () => {
                 expect(mockFn).toHaveBeenCalled();
 
                 expect(droppable['virtualInputElement']).toEqual(inputElement);
+
+                mockFn.mockRestore();
             });
 
             it('should call registerVirtualInputElementEvents() and store the events remover as virtualInputElementEventsRemover', () => {
@@ -204,6 +206,8 @@ describe('Droppable', () => {
                 expect(mockFn).toHaveBeenCalled();
 
                 expect(droppable['virtualInputElementEventsRemover']).toEqual(fakeEventRemover);
+
+                mockFn.mockRestore();
             });
 
             it('should have default config values', () => {
@@ -264,48 +268,209 @@ describe('Droppable', () => {
         });
 
         describe('onFilesDropped(listener)', () => {
-            it('should add the given listener to the filesWereDroppedEvent', () => {});
+            it('should add the given listener to the filesWereDroppedEvent', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const mockFn = jest.spyOn(droppable['filesWereDroppedEvent'], 'on');
+                const eventListener = () => {};
+                droppable.onFilesDropped(eventListener);
+
+                expect(mockFn).toHaveBeenCalledWith(eventListener);
+            });
         });
 
         describe('getLatestDroppedFiles()', () => {
-            describe('when files were previously dropped', () => {
-                it('should return an array containing the previously dropped files', () => {});
+            describe('when latestDroppedFiles is defined', () => {
+                it('should return it', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+                    const fakeDroppedFiles: File[] = [];
+                    droppable['latestDroppedFiles'] = fakeDroppedFiles;
+
+                    const latestDroppedFiles = droppable.getLatestDroppedFiles();
+
+                    expect(latestDroppedFiles).toBe(fakeDroppedFiles);
+                });
             });
 
-            describe('when files were NOT previously dropped', () => {
-                it('should return an empty array', () => {});
+            describe('when latestDroppedFiles is not defined', () => {
+                it('should return an empty array', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const latestDroppedFiles = droppable.getLatestDroppedFiles();
+
+                    expect(latestDroppedFiles).toBeInstanceOf(Array);
+                    expect(latestDroppedFiles.length).toBe(0);
+                });
             });
         });
 
         describe('promptForFiles()', () => {
-            it('should trigger a click on the virtualInputElement', () => {});
+            it('should trigger a click on the virtualInputElement', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const mock = jest.spyOn(droppable['virtualInputElement'], 'click');
+                droppable.promptForFiles();
+
+                expect(mock).toHaveBeenCalled();
+            });
         });
 
         describe('registerVirtualInputElementEvents()', () => {
-            it(`should get the virtual input element eventsDictionary and call registerElementEventsWithDictionary(this.virtualInputElement, eventsDictionary)`, () => {});
+            it(`should get the virtual input element eventsDictionary and call registerElementEventsWithDictionary(this.virtualInputElement, eventsDictionary) and return the remover function`, () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const fakeEventsDictionary = {};
+                const getVirtualInputElementEventsDictionaryMock = jest.spyOn(droppable, 'getVirtualInputElementEventsDictionary').mockImplementation(() => {
+                    return fakeEventsDictionary;
+                });
+
+                const fakeRemoverFunction = () => {};
+
+                const registerElementEventsWithDictionaryMock = jest.spyOn(droppable, 'registerElementEventsWithDictionary').mockImplementation(() => {
+                    return fakeRemoverFunction;
+                });
+
+                const fakeVirtualInputElement = document.createElement('input');
+                droppable['virtualInputElement'] = fakeVirtualInputElement;
+
+                const result = droppable['registerVirtualInputElementEvents']();
+
+                expect(getVirtualInputElementEventsDictionaryMock).toHaveBeenCalled();
+                expect(registerElementEventsWithDictionaryMock).toHaveBeenCalledWith(fakeVirtualInputElement, fakeEventsDictionary);
+                expect(result).toEqual(fakeRemoverFunction);
+
+                getVirtualInputElementEventsDictionaryMock.mockClear();
+
+                getVirtualInputElementEventsDictionaryMock.mockRestore();
+                registerElementEventsWithDictionaryMock.mockRestore();
+            });
         });
 
         describe('registerElementEvents()', () => {
-            it(`should get the element eventsDictionary and call registerElementEventsWithDictionary(this.element, eventsDictionary)`, () => {});
+            it(`should get the element eventsDictionary and call registerElementEventsWithDictionary(this.element, eventsDictionary) and return the remover function`, () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const fakeEventsDictionary = {};
+                const getElementEventsDictionaryMock = jest.spyOn(droppable, 'getElementEventsDictionary').mockImplementation(() => {
+                    return fakeEventsDictionary;
+                });
+
+                const fakeRemoverFunction = () => {};
+
+                const registerElementEventsWithDictionaryMock = jest.spyOn(droppable, 'registerElementEventsWithDictionary').mockImplementation(() => {
+                    return fakeRemoverFunction;
+                });
+
+                const fakeElement = document.createElement('input');
+                droppable['element'] = fakeElement;
+
+                const result = droppable['registerElementEvents']();
+
+                expect(getElementEventsDictionaryMock).toHaveBeenCalled();
+                expect(registerElementEventsWithDictionaryMock).toHaveBeenCalledWith(fakeElement, fakeEventsDictionary);
+                expect(result).toEqual(fakeRemoverFunction);
+
+                getElementEventsDictionaryMock.mockClear();
+
+                getElementEventsDictionaryMock.mockRestore();
+                registerElementEventsWithDictionaryMock.mockRestore();
+            });
         });
 
         describe('setLatestDrop(files)', () => {
-            it('should set latestDroppedFiles to the given value', () => {});
+            it('should set latestDroppedFiles to the given value', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
 
-            it('should call emitFilesWereDropped(files)', () => {});
+                const fakeFiles: File[] = [];
+
+                droppable['setLatestDrop'](fakeFiles);
+
+                expect(droppable['latestDroppedFiles']).toEqual(fakeFiles);
+            });
+
+            it('should call emitFilesWereDropped(files)', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const mockFn = jest.spyOn(droppable, 'emitFilesWereDropped');
+
+                const fakeFiles: File[] = [];
+
+                droppable['setLatestDrop'](fakeFiles);
+
+                expect(mockFn).toHaveBeenCalledWith(fakeFiles);
+            });
         });
 
         describe('emitFilesWereDropped(files)', () => {
-            it('should call filesWereDroppedEvent.emit(files)', () => {});
+            it('should call filesWereDroppedEvent.emit(files)', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const mockFn = spyOn(droppable['filesWereDroppedEvent'], 'emit');
+
+                const fakeFiles: File[] = [];
+
+                droppable['emitFilesWereDropped'](fakeFiles);
+
+                expect(mockFn).toHaveBeenCalledWith(fakeFiles);
+            });
         });
 
         describe('onElementClick()', () => {
             describe('when isClickable is true', () => {
-                it('should call promptForFiles()', () => {});
+                it('should call promptForFiles()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(droppable, 'promptForFiles');
+
+                    droppable['isClickable'] = true;
+
+                    droppable['onElementClick']();
+
+                    expect(mockFn).toHaveBeenCalled();
+                });
             });
 
             describe('when isClickable is false', () => {
-                it('should not call promptForFiles()', () => {});
+                it('should not call promptForFiles()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(droppable, 'promptForFiles');
+
+                    droppable['isClickable'] = false;
+
+                    droppable['onElementClick']();
+
+                    expect(mockFn).not.toHaveBeenCalled();
+                });
             });
         });
 
