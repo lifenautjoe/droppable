@@ -14,8 +14,33 @@ A library to give file dropping/selecting abilities to any HTML element.
 
 ## Motivation
 
+Wouldn't it be great if you could give any HTML element the ability of dropping files in it or clicking it to select the files to drop in it?
+
+And what's better, that you could retrieve these files by listening to an event?
+
+Well this library does exactly that!
 
 ## Features
+
+* Restrict to single or multiple files
+* CSS class added when files are being dragged on top of the HTML element.
+* Clicking on the html element also prompts user for files.
+* Zero dependencies
+* Tiny! (~4 KB Minified)
+
+## Basic usage
+
+````typescript
+const Droppable = require('droppable');
+
+const droppable = new Droppable({
+    element: document.querySelector('#my-droppable-element')
+})
+
+droppable.onFilesDropped((files) => {
+    console.log('Files were dropped:', files);
+});
+````
 
 ## Installation
 
@@ -23,7 +48,102 @@ A library to give file dropping/selecting abilities to any HTML element.
 npm install droppable
 ```
 
-## Usage
+## Advanced usage
+
+### Create a droppable element
+
+````typescript
+const Noel = require('Noel');
+
+const droppable = new Droppable({
+    element: document.querySelector('#my-droppable-element')
+});
+````
+
+### Listen for files dropped
+```typescript
+droppable.onFilesDropped((files) => {
+    console.log('Files were dropped:', files);
+});
+```
+
+### Remove listener for files dropped
+`onFilesDropped` returns a function which when called removes the event listener
+```typescript
+const eventRemover = droppable.onFilesDropped((files) => {
+    console.log('Files were dropped on the element:', files);
+});
+
+eventRemover();
+```
+
+### Get the latest dropped files
+```typescript
+const latestDroppedFiles = droppable.getLatestDroppedFiles();
+```
+
+### Trigger prompt for files
+Sometimes you will want to prompt the user for files without him dropping files or clicking the element.
+```typescript
+droppable.promptForFiles();
+```
+
+### Prompt for files when clicked
+**This is by default `true`**
+
+The user will be prompted for files when the droppable element is clicked
+
+```typescript
+// On instantiation
+const droppable = new Droppable({
+    element,
+    isClickable: false
+})
+
+// On runtime
+droppable.setIsClickable(true);
+```
+
+### Accept multiple dropped/selected files
+**This is by default `true`**
+
+The user will be able to drop or select multiple files.
+
+```typescript
+// On instantiation
+const droppable = new Droppable({
+    element,
+    acceptsMultipleFiles: false
+})
+
+// On runtime
+droppable.setAcceptsMultipleFiles(true);
+```
+
+### Append CSS class when files are dragged on element
+**This is by default `true`**
+
+The class `dragover` will be added to the droppable element when files are being dragged on it.
+
+```typescript
+// On instantiation
+const droppable = new Droppable({
+    element,
+    appendStatusClasses: false
+})
+
+// On runtime
+droppable.setAppendStatusClasses(true);
+```
+
+
+### Clean up event listeners
+The library attaches several events to the HTML element which is made droppable.
+When you're done remember to call the `cleanUp` function
+```typescript
+droppable.cleanUp();
+```
+
 
 ## Development
 
