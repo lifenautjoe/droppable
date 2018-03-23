@@ -610,7 +610,30 @@ describe('Droppable', () => {
             });
 
             describe('when the event has a target', () => {
-                it('should call setLatestDrop wit the files from event.target.files', () => {});
+                it('should call setLatestDrop with the files from event.target.files', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    let files;
+                    const mockFn = jest.spyOn(droppable, 'setLatestDrop').mockImplementation(filesArray => {
+                        files = filesArray;
+                    });
+
+                    const file = new Blob([], { type: 'text/csv' });
+
+                    const fakeEvent = {
+                        target: {
+                            files: [file]
+                        }
+                    };
+
+                    droppable['onDroppableElementChange'](fakeEvent);
+
+                    expect(mockFn).toHaveBeenCalled();
+                    expect(files).toContain(file);
+                });
             });
 
             describe('when the event has neither dataTransfer nor target', () => {
