@@ -68,7 +68,7 @@ npm install droppable
 ### Create a droppable element
 
 ````typescript
-const Noel = require('Noel');
+const Droppable = require('droppable');
 
 const droppable = new Droppable({
     element: document.querySelector('#my-droppable-element')
