@@ -22,7 +22,7 @@ A library to give file dropping super-powers to any HTML element.
   * [Disable multiple files drop](#disable-multiple-files-drop)
   * [Enable append CSS class when files are dragged on element](#enable-append-css-class-when-files-are-dragged-on-element)
   * [Disable append CSS class when files are dragged on element](#disable-append-css-class-when-files-are-dragged-on-element)
-  * [Clean up](#clean-up)
+  * [Destroy](#destroy)
 - [Development](#development)
   * [Clone the repository](#clone-the-repository)
 
@@ -54,7 +54,7 @@ droppable.onFilesDropped((files) => {
 });
 
 // Clean up when you're done!
-droppable.cleanUp();
+droppable.destroy();
 ````
 
 ## Installation
@@ -197,11 +197,12 @@ droppable.setAppendStatusClasses(false);
 ```
 
 
-### Clean up
-The library attaches several events to the HTML element which is made droppable.
-When you're done remember to call the `cleanUp` function
+### Destroy
+The library attaches several events to the HTML element made droppable.
+The `destroy` function not only removes all of them but also the onFilesDropped listeners.
+
 ```typescript
-droppable.cleanUp();
+droppable.destroy();
 ```
 
 
