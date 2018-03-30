@@ -1,6 +1,6 @@
 {
   "name": "droppable",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "",
   "keywords": [],
   "main": "dist/droppable.umd.js",
@@ -60,7 +60,8 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/test/"
+      "/test/",
+      "/dist/"
     ],
     "coverageThreshold": {
       "global": {

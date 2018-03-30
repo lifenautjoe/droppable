@@ -62,9 +62,10 @@ export default class Droppable {
         };
     }
 
-    cleanUp() {
+    destroy() {
         this.elementEventsRemover();
         this.virtualInputElementEventsRemover();
+        this.onFilesDroppedEventListeners = [];
     }
 
     getLatestDroppedFiles(): File[] {
@@ -140,6 +141,7 @@ export default class Droppable {
 
     private onVirtualInputElementChange(e: Event) {
         this.onDroppableElementChange(e);
+        this.virtualInputElement.value = '';
     }
 
     private onDroppableElementChange(event: { [key: string]: any }) {
