@@ -613,6 +613,20 @@ describe('Droppable', () => {
 
                 expect(mockFn).toHaveBeenCalledWith(fakeEvent);
             });
+
+            it("should set value='' on the virtualInputElement", () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const mockFn = jest.spyOn(droppable, 'onDroppableElementChange').mockImplementation(() => {});
+
+                const fakeEvent = {};
+
+                droppable['onVirtualInputElementChange'](fakeEvent);
+
+                expect(droppable['virtualInputElement'].value).toBe('');
+            });
         });
 
         describe('onDroppableElementChange(event)', () => {
@@ -684,7 +698,7 @@ describe('Droppable', () => {
             });
         });
 
-        describe('cleanUp()', () => {
+        describe('destroy()', () => {
             it('should call the elementEventsRemover', () => {
                 const element = document.createElement('div');
                 const droppable = new Droppable({
@@ -693,7 +707,7 @@ describe('Droppable', () => {
 
                 const mockFn = spyOn(droppable, 'virtualInputElementEventsRemover');
 
-                droppable.cleanUp();
+                droppable.destroy();
 
                 expect(mockFn).toHaveBeenCalled();
             });
@@ -706,9 +720,20 @@ describe('Droppable', () => {
 
                 const mockFn = jest.spyOn(droppable, 'elementEventsRemover');
 
-                droppable.cleanUp();
+                droppable.destroy();
 
                 expect(mockFn).toHaveBeenCalled();
+            });
+
+            it('should set the onFilesDroppedEventListeners to an empty array', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable.destroy();
+
+                expect(droppable['onFilesDroppedEventListeners'].length).toBe(0);
             });
         });
 
