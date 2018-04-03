@@ -1,6 +1,6 @@
 # droppable
 
-A library to give file dropping super-powers to any HTML element.
+A javascript library to give file dropping super-powers to any HTML element.
 
 [![Build Status](https://travis-ci.org/lifenautjoe/droppable.svg?branch=master)](https://travis-ci.org/lifenautjoe/droppable) ![Human Friendly](https://img.shields.io/badge/human-friendly-brightgreen.svg) [![Coverage Status](https://coveralls.io/repos/github/lifenautjoe/droppable/badge.svg?branch=master)](https://coveralls.io/github/lifenautjoe/droppable?branch=master)
 
