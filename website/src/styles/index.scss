@@ -9,7 +9,7 @@ $family-serif: "Arial", sans-serif;
 
 // 3. Set the derived variables
 // Use the new pink as the primary color
-$primary: black;
+$primary: #6f0ed9;
 $primary-invert: white;
 // Use the existing orange as the danger color
 $danger: $orange;
@@ -42,3 +42,5 @@ $colors: map-merge($colors, $addColors);
 .droppable-heading{
     max-width: 640px;
 }
+
+@import "bouncing-ball";
