@@ -36,3 +36,9 @@ $colors: map-merge($colors, $addColors);
 
 // 6. Import the rest of Bulma
 @import "../../node_modules/bulma/bulma.sass";
+
+
+
+.droppable-heading{
+    max-width: 640px;
+}
