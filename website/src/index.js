@@ -62,5 +62,5 @@ Vue.component('file-dropper', {
 Vue.use(Buefy);
 
 new Vue({
-    el: '#app'
+    el: '#home'
 });

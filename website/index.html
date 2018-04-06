@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 </head>
 <body>
-<section class="hero is-primary is-fullheight is-bold" id="app">
+<section class="hero is-primary is-fullheight is-bold" id="home">
     <div class="bouncing-ball-container is-hidden-mobile">
         <div id="ball"></div>
         <div id="ground"></div>
@@ -34,15 +34,18 @@
             <div class="container">
                 <div id="navbarMenu" class="navbar-menu">
                     <div class="navbar-end">
-                        <a class="navbar-item is-active">
+                        <a href="#home" class="navbar-item is-active">
                             Home
                         </a>
-                        <a class="navbar-item">
+                        <a href="#usage" class="navbar-item">
                             Usage
+                        </a>
+                        <a href="#features" class="navbar-item">
+                            Features
                         </a>
                         <span class="navbar-item">
                 <a class="button is-white is-outlined is-small"
-                   href="https://github.com/dansup/bulma-templates/blob/master/templates/hero.html">
+                   href="https://github.com/lifenautjoe/droppable">
                   <span class="icon">
                     <i class="fab fa-github"></i>
                   </span>
@@ -95,7 +98,7 @@
         dropped!
     </p>
 </div>
-<section class="container section">
+<section class="container section" id="usage">
     <div class="columns">
         <div class="column is-12">
             <div class="columns is-centered is-multiline">
@@ -122,7 +125,7 @@ droppable.destroy();
         </div>
     </div>
 </section>
-<section class="container section">
+<section class="container section" id="features">
     <div class="columns">
         <div class="column is-12 has-text-centered">
             <h2 class="is-size-4 title">Features</h2>
