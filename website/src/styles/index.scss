@@ -57,6 +57,10 @@ $colors: map-merge($colors, $addColors);
     padding: 0.7rem;
 }
 
+.is-shady{
+    height: 100%;
+}
+
 @import "bouncing-ball";
 @import "helpers";
 @import "droppable-item";
