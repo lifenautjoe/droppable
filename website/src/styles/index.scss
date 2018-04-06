@@ -43,7 +43,18 @@ $colors: map-merge($colors, $addColors);
     max-width: 640px;
 }
 
+.hero-content{
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.hero{
+    position: relative;
+}
+
 @import "bouncing-ball";
 @import "helpers";
 @import "droppable-item";
 @import "credits";
+@import "code/all";
+@import "blinking-cursor";
