@@ -15,10 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 Vue.component('file-dropper', {
     template: `
-<div class="column is-narrow">
-    <div class="button is-primary droppable-item" ref="droppable-item">
-        <div class="columns is-mobile has-text-centered is-centered">
-            <div class="column is-12">
+<div class="column is-narrow is-paddingless">
+        <b-tooltip label="Psst.. I'm a simple div element." animated position="is-bottom">
+  <div class="button is-primary droppable-item" ref="droppable-item">
+        <div class="columns is-mobile has-text-centered is-centered is-multiline">
+            <div class="column is-narrow file-dropper-content">
                 <div>
                     <div class="icon">
                         <i class="fas fa-arrow-down"></i>
@@ -31,6 +32,7 @@ Vue.component('file-dropper', {
             </div>
         </div>
     </div>
+</b-tooltip>
 </div>
     `,
     mounted() {
