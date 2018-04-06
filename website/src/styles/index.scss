@@ -45,11 +45,16 @@ $colors: map-merge($colors, $addColors);
 
 .hero-content{
     background: #f5f5f5;
+    padding: 1rem;
     border-radius: 5px;
 }
 
 .hero{
     position: relative;
+}
+
+.title{
+    padding: 0.7rem;
 }
 
 @import "bouncing-ball";
