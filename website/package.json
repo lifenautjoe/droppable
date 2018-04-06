@@ -21,9 +21,11 @@
     },
     "homepage": "",
     "dependencies": {
+        "buefy": "^0.6.5",
         "bulma": "^0.6.2",
         "droppable": "^2.0.0",
-        "normalize.css": "^8.0.0"
+        "normalize.css": "^8.0.0",
+        "vue": "^2.5.16"
     },
     "devDependencies": {
         "ajv": "^6.3.0",

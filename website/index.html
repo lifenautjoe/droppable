@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 </head>
 <body>
-<section class="hero is-primary is-fullheight is-bold">
+<section class="hero is-primary is-fullheight is-bold" id="app">
     <div class="bouncing-ball-container is-hidden-mobile">
         <div id="ball"></div>
         <div id="ground"></div>
@@ -79,23 +79,7 @@
                     </div>
                     <div class="column is-12">
                         <div class="columns is-centered is-mobile">
-                            <div class="column is-narrow">
-                                <div class="button is-primary droppable-item">
-                                    <div class="columns is-mobile has-text-centered is-centered">
-                                        <div class="column is-12">
-                                            <div>
-                                                <div class="icon">
-                                                    <i class="fas fa-arrow-down"></i>
-                                                </div>
-                                            </div>
-                                            <strong>Drop a file here</strong>
-                                            <div>
-                                                <i class="is-size-7">(Or click me)</i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <file-dropper></file-dropper>
                         </div>
                     </div>
                 </div>
@@ -105,7 +89,6 @@
     </div>
 
 </section>
-
 <div class="box cta">
     <p class="has-text-centered">
         <span class="tag is-primary">New</span> &nbsp;&nbsp; Add a CSS class to the element when files are being
