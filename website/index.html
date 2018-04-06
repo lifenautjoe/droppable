@@ -95,11 +95,37 @@
         dropped!
     </p>
 </div>
+<section class="container section">
+    <div class="columns">
+        <div class="column is-12">
+            <div class="columns is-centered is-multiline">
+                <div class="column is-12 has-text-centered">
+                    <h2 class="is-size-4 title">Basic Usage</h2>
+                </div>
+                <div class="column is-narrow">
+                <pre><code class="javascript">
+const Droppable = require('droppable');
 
-<section class="container">
+const droppable = new Droppable({
+    element: document.querySelector('#my-droppable-element')
+})
+
+droppable.onFilesDropped((files) => {
+    console.log('Files were dropped:', files);
+});
+
+// Clean up when you're done!
+droppable.destroy();
+                </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container section">
     <div class="columns">
         <div class="column is-12 has-text-centered">
-            <h2 class="is-size-4">Features</h2>
+            <h2 class="is-size-4 title">Features</h2>
         </div>
     </div>
     <div class="columns">
@@ -110,7 +136,6 @@
                         <h4>Tiny footprint</h4>
                         <p>With <strong>zero dependencies</strong> and code written with the last bit in mind the
                             library weighs only <strong>~4 KB minified</strong></p>
-                        <p><a href="#">Learn more in Github</a></p>
                     </div>
                 </div>
             </div>
@@ -136,7 +161,6 @@
                                 Add a class to the element when files are being dropped
                             </li>
                         </ul>
-                        <p><a href="#">Learn more in Github</a></p>
                     </div>
                 </div>
             </div>
@@ -146,9 +170,10 @@
                 <div class="card-content">
                     <div class="content">
                         <h4>Free and reliable.</h4>
-                        <p>Being <strong>MIT Licensed</strong>, <strong>100% Tested</strong>, <strong>semantically versioned</strong> and <strong>used
-                            in a heavy load monitored production environment</strong>, you can trust the library not to ever break over night.</p>
-                        <p><a href="#">Learn more</a></p>
+                        <p>Being <strong>MIT Licensed</strong>, <strong>100% Tested</strong>, <strong>semantically
+                            versioned</strong> and <strong>used
+                            in a heavy load monitored production environment</strong>, you can trust the library not to
+                            ever break over night.</p>
                     </div>
                 </div>
             </div>
