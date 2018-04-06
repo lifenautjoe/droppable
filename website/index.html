@@ -37,6 +37,9 @@
                         <a href="#home" class="navbar-item is-active">
                             Home
                         </a>
+                        <a href="#installation" class="navbar-item">
+                            Installation
+                        </a>
                         <a href="#usage" class="navbar-item">
                             Usage
                         </a>
@@ -98,33 +101,6 @@
         dropped!
     </p>
 </div>
-<section class="container section" id="usage">
-    <div class="columns">
-        <div class="column is-12">
-            <div class="columns is-centered is-multiline">
-                <div class="column is-12 has-text-centered">
-                    <h2 class="is-size-4 title">Basic Usage</h2>
-                </div>
-                <div class="column is-narrow">
-                <pre><code class="javascript">
-const Droppable = require('droppable');
-
-const droppable = new Droppable({
-    element: document.querySelector('#my-droppable-element')
-})
-
-droppable.onFilesDropped((files) => {
-    console.log('Files were dropped:', files);
-});
-
-// Clean up when you're done!
-droppable.destroy();
-                </code></pre>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <section class="container section" id="features">
     <div class="columns">
         <div class="column is-12 has-text-centered">
@@ -183,8 +159,55 @@ droppable.destroy();
         </div>
     </div>
 </section>
-<div class="container section">
+
+<section class="container section" id="installation">
     <div class="columns">
+        <div class="column is-12">
+            <div class="columns is-centered is-multiline">
+                <div class="column is-12 has-text-centered">
+                    <h2 class="is-size-4 title">Installation</h2>
+                </div>
+                <div class="column is-narrow">
+                <pre><code class="shell-session">
+$ npm install droppable
+                </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container section" id="usage">
+    <div class="columns">
+        <div class="column is-12">
+            <div class="columns is-centered is-multiline">
+                <div class="column is-12 has-text-centered">
+                    <h2 class="is-size-4 title">Basic Usage</h2>
+                </div>
+                <div class="column is-narrow">
+                <pre><code class="javascript">
+const Droppable = require('droppable');
+
+const droppable = new Droppable({
+    element: document.querySelector('#my-droppable-element')
+})
+
+droppable.onFilesDropped((files) => {
+    console.log('Files were dropped:', files);
+});
+
+// Clean up when you're done!
+droppable.destroy();
+                </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container section">
+    <div class="columns is-multiline">
+        <div class="column is-12 has-text-centered">
+            <h3 class="is-size-5">Want to know more?</h3>
+        </div>
         <div class="column is-12">
             <div class="content has-text-centered">
                 <a href="https://github.com/lifenautjoe/droppable" class="button is-large is-primary">
