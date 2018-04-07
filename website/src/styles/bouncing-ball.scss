@@ -9,7 +9,7 @@
 #ground {
     position: absolute;
     background: #f5f5f5;
-    top: 18em;
+    top: 13em;
     left: 0;
     right: 0;
     bottom: 0;
@@ -18,7 +18,7 @@
 
 #shadow {
     position: absolute;
-    top: 19em;
+    top: 14em;
     left: 50%;
     margin-left: -1em;
     width: 2em;
@@ -78,7 +78,7 @@
     35% { height: 4em; width: 2.5em; }
     75% { height: 4em; width: 2.5em; }
     95% { height: 2em; width: 3.5em; }
-    100% { top: 18em; height: 1em; width: 3em; }
+    100% { top: 14em; height: 1em; width: 3em; }
 }
 @-moz-keyframes bounce {
     0%, 10% { top: 3em; height: 3em; width: 3em; }
@@ -86,7 +86,7 @@
     35% { height: 4em; width: 2.5em; }
     75% { height: 4em; width: 2.5em; }
     95% { height: 2em; width: 3.5em; }
-    100% { top: 18em; height: 1em; width: 3em; }
+    100% { top: 14em; height: 1em; width: 3em; }
 }
 @-o-keyframes bounce {
     0%, 10% { top: 3em; height: 3em; width: 3em; }
@@ -94,7 +94,7 @@
     35% { height: 4em; width: 2.5em; }
     75% { height: 4em; width: 2.5em; }
     95% { height: 2em; width: 3.5em; }
-    100% { top: 18em; height: 1em; width: 3em; }
+    100% { top: 14em; height: 1em; width: 3em; }
 }
 @keyframes bounce {
     0%, 10% { top: 3em; height: 3em; width: 3em; }
@@ -102,5 +102,5 @@
     35% { height: 4em; width: 2.5em; }
     75% { height: 4em; width: 2.5em; }
     95% { height: 2em; width: 3.5em; }
-    100% { top: 18em; height: 1em; width: 3em; }
+    100% { top: 14em; height: 1em; width: 3em; }
 }
