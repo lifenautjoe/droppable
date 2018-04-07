@@ -61,6 +61,10 @@ $colors: map-merge($colors, $addColors);
     height: 100%;
 }
 
+.droppable-logo{
+    max-width: 200px;
+}
+
 @import "bouncing-ball";
 @import "helpers";
 @import "droppable-item";
