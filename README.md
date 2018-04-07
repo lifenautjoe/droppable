@@ -1,4 +1,4 @@
-# droppable
+<img alt="droppable logo" src="https://github.com/lifenautjoe/droppable-website/blob/fade7e64b1d8e4790296ec3761e77204c1621082/src/assets/logo-2.png?raw=true" width="250">
 
 A javascript library to give file dropping super-powers to any HTML element.
 
@@ -28,9 +28,9 @@ A javascript library to give file dropping super-powers to any HTML element.
 
 ## Motivation
 
-Wouldn't it be great if you could drop files in any HTML element and retrieve them by listening to a simple event?
+Wouldn't it be great if you could drop files in any HTML element allowing you to style the item however you like?
 
-This library does just that 🎉
+Well now you can!  🎉
 
 ## Features
 
