@@ -47,6 +47,7 @@ export default class Droppable {
 
         this.element = config.element;
         this.elementEventsRemover = this.registerElementEvents();
+        Droppable.addAccessibilityAttributesToDroppableElement(this.element);
 
         this.virtualInputElementEventsRemover = this.registerVirtualInputElementEvents();
     }
@@ -56,6 +57,16 @@ export default class Droppable {
         input.setAttribute('type', 'file');
         input.style.display = 'none';
         return input;
+    }
+
+    private static addAccessibilityAttributesToDroppableElement(element) {
+        element.tabIndex = 0;
+        element.role = 'button';
+    }
+
+    private static removeAccessibilityAttributesToDroppableElement(element) {
+        delete element.tabIndex;
+        delete element.role;
     }
 
     onFilesDropped(listener: FilesWereDroppedEventListener): EventRemover {
@@ -70,6 +81,7 @@ export default class Droppable {
         this.elementEventsRemover();
         this.virtualInputElementEventsRemover();
         this.onFilesDroppedEventListeners = [];
+        Droppable.removeAccessibilityAttributesToDroppableElement(this.element);
     }
 
     getLatestDroppedFiles(): File[] {
