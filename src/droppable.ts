@@ -160,6 +160,7 @@ export default class Droppable {
     private onElementKeyDown(e: { [key: string]: any }) {
         if (e['keyCode'] === Droppable.ENTER_KEY_CODE) {
             this.promptForFiles();
+            this.element.blur();
         }
     }
 
