@@ -7,6 +7,8 @@
  */
 
 export default class Droppable {
+    private static ENTER_KEY_CODE = 13;
+
     private dragOverClass = 'dragover';
 
     private appendStatusClasses: boolean;
@@ -18,6 +20,8 @@ export default class Droppable {
 
     private virtualInputElement: HTMLInputElement;
     private virtualInputElementEventsRemover: Function;
+
+    private elementKeyDownEventRemover: Function;
 
     private latestDroppedFiles: File[];
 
@@ -43,6 +47,7 @@ export default class Droppable {
 
         this.element = config.element;
         this.elementEventsRemover = this.registerElementEvents();
+        Droppable.addAccessibilityAttributesToDroppableElement(this.element);
 
         this.virtualInputElementEventsRemover = this.registerVirtualInputElementEvents();
     }
@@ -52,6 +57,16 @@ export default class Droppable {
         input.setAttribute('type', 'file');
         input.style.display = 'none';
         return input;
+    }
+
+    private static addAccessibilityAttributesToDroppableElement(element: any) {
+        element.tabIndex = 0;
+        element.role = 'button';
+    }
+
+    private static removeAccessibilityAttributesToDroppableElement(element: any) {
+        delete element.role;
+        element.removeAttribute('tabIndex');
     }
 
     onFilesDropped(listener: FilesWereDroppedEventListener): EventRemover {
@@ -66,6 +81,7 @@ export default class Droppable {
         this.elementEventsRemover();
         this.virtualInputElementEventsRemover();
         this.onFilesDroppedEventListeners = [];
+        Droppable.removeAccessibilityAttributesToDroppableElement(this.element);
     }
 
     getLatestDroppedFiles(): File[] {
@@ -112,7 +128,9 @@ export default class Droppable {
             dragover: this.onElementDragOver,
             dragleave: this.onElementDragLeave,
             drop: this.onElementDrop,
-            click: this.onElementClick
+            click: this.onElementClick,
+            focus: this.onElementFocus,
+            focusout: this.onElementFocusOut
         };
     }
 
@@ -137,6 +155,22 @@ export default class Droppable {
 
     private onElementClick() {
         if (this.isClickable) this.promptForFiles();
+    }
+
+    private onElementKeyDown(e: { [key: string]: any }) {
+        if (e['keyCode'] === Droppable.ENTER_KEY_CODE) {
+            this.promptForFiles();
+        }
+    }
+
+    private onElementFocus() {
+        this.elementKeyDownEventRemover = this.registerElementEventsWithDictionary(this.element, {
+            keydown: this.onElementKeyDown
+        });
+    }
+
+    private onElementFocusOut() {
+        this.elementKeyDownEventRemover();
     }
 
     private onVirtualInputElementChange(e: Event) {

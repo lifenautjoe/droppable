@@ -24,6 +24,61 @@ describe('Droppable', () => {
                 expect(inputElement.style.display).toBe('none');
             });
         });
+
+        describe('addAccessibilityAttributesToDroppableElement(element)', () => {
+            it('should add the tabindex attribute to the given element', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element.tabIndex).toBeDefined();
+            });
+
+            it('should set the tabindex attribute of the given element to 0', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element.tabIndex).toBe(0);
+            });
+
+            it('should add the role attribute to the given element', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element['role']).toBeDefined();
+            });
+
+            it('should set the role attribute of the given element to button', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element['role']).toBe('button');
+            });
+        });
+
+        describe('removeAccessibilityAttributesToDroppableElement(element)', () => {
+            it('should set the tabindex attribute of the given element to -1', () => {
+                const element = document.createElement('div');
+                element.tabIndex = 0;
+
+                Droppable['removeAccessibilityAttributesToDroppableElement'](element);
+
+                // Note: For some reason when calling deleteAttribute('tabIndex'), it is set to -1...
+                expect(element.tabIndex).toBe(-1);
+            });
+
+            it('should remove the role attribute of the given element', () => {
+                const element = document.createElement('div');
+                element['role'] = 'button';
+
+                Droppable['removeAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element['role']).toBeUndefined();
+            });
+        });
     });
 
     describe('instance', () => {
@@ -154,6 +209,20 @@ describe('Droppable', () => {
                 expect(mockFn).toHaveBeenCalled();
 
                 expect(droppable['virtualInputElementEventsRemover']).toEqual(fakeEventRemover);
+
+                mockFn.mockRestore();
+            });
+
+            it('should call addAccessibilityAttributesToDroppableElement(config.element)', () => {
+                const mockFn = jest.spyOn(Droppable, 'addAccessibilityAttributesToDroppableElement').mockImplementation(() => {});
+
+                const element = document.createElement('div');
+
+                new Droppable({
+                    element
+                });
+
+                expect(mockFn).toHaveBeenCalledWith(element);
 
                 mockFn.mockRestore();
             });
@@ -401,6 +470,82 @@ describe('Droppable', () => {
                 listeners.forEach(listener => {
                     expect(listener).toHaveBeenCalledWith(fakeFiles);
                 });
+            });
+        });
+
+        describe('onElementKeyDown(e)', () => {
+            describe('when the key is enter', () => {
+                it('should call promptForFiles()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(droppable, 'promptForFiles');
+
+                    const keyDownEvent = new KeyboardEvent('keydown', { keyCode: 13 });
+                    droppable['onElementKeyDown'](keyDownEvent);
+
+                    expect(mockFn).toHaveBeenCalled();
+                });
+            });
+
+            describe('when the key is not enter', () => {
+                it('should not call promptForFiles()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(droppable, 'promptForFiles');
+
+                    const keyDownEvent = new KeyboardEvent('keydown', { keyCode: 14 });
+                    droppable['onElementKeyDown'](keyDownEvent);
+
+                    expect(mockFn).not.toHaveBeenCalled();
+                });
+            });
+        });
+
+        describe('onElementFocus()', () => {
+            it('should call registerElementEventsWithDictionary(this.element,{keydown:this.onElementKeyDown}) and store the result in this.elementKeyDownEventRemover', () => {
+                const fakeEventRemover = () => {};
+
+                let callConfig;
+
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const mockFn = jest.spyOn(droppable, 'registerElementEventsWithDictionary');
+
+                mockFn.mockImplementation((element, config) => {
+                    callConfig = config;
+                    return fakeEventRemover;
+                });
+
+                droppable['onElementFocus']();
+
+                expect(mockFn).toHaveBeenCalled();
+                expect(callConfig['keydown']).toEqual(droppable['onElementKeyDown']);
+                expect(droppable['elementKeyDownEventRemover']).toEqual(fakeEventRemover);
+            });
+        });
+
+        describe('onElementFocusOut()', () => {
+            it('should call this.elementKeyDownEventRemover()', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const mockFn = jest.fn();
+
+                droppable['elementKeyDownEventRemover'] = mockFn;
+
+                droppable['onElementFocusOut']();
+
+                expect(mockFn).toHaveBeenCalled();
             });
         });
 
@@ -699,6 +844,22 @@ describe('Droppable', () => {
         });
 
         describe('destroy()', () => {
+            it('should call removeAccessibilityAttributesToDroppableElement(this.element)', () => {
+                const mockFn = jest.spyOn(Droppable, 'removeAccessibilityAttributesToDroppableElement').mockImplementation(() => {});
+
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable.destroy();
+
+                expect(mockFn).toHaveBeenCalledWith(element);
+
+                mockFn.mockRestore();
+            });
+
             it('should call the elementEventsRemover', () => {
                 const element = document.createElement('div');
                 const droppable = new Droppable({

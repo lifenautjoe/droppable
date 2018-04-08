@@ -40,6 +40,7 @@ Well now you can!  🎉
 * Clicking on the html element also prompts user for files (configurable)
 * Zero dependencies
 * Tiny! (~4 KB Minified)
+* Accessibility support
 
 ## Basic usage
 
