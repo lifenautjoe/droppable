@@ -2,13 +2,14 @@
 
 A javascript library to give file dropping super-powers to any HTML element.
 
-[![Build Status](https://travis-ci.org/lifenautjoe/droppable.svg?branch=master)](https://travis-ci.org/lifenautjoe/droppable) ![Human Friendly](https://img.shields.io/badge/human-friendly-brightgreen.svg) [![Coverage Status](https://coveralls.io/repos/github/lifenautjoe/droppable/badge.svg?branch=master)](https://coveralls.io/github/lifenautjoe/droppable?branch=master)
+[![Build Status](https://travis-ci.org/lifenautjoe/droppable.svg?branch=master)](https://travis-ci.org/lifenautjoe/droppable) ![Human Friendly](https://img.shields.io/badge/human-friendly-brightgreen.svg) [![Coverage Status](https://coveralls.io/repos/github/lifenautjoe/droppable/badge.svg?branch=master)](https://coveralls.io/github/lifenautjoe/droppable?branch=master)[![npm version](https://badge.fury.io/js/droppable.svg)](https://badge.fury.io/js/droppable)
 
 ## Table of Contents
 
 - [Motivation](#motivation)
 - [Features](#features)
 - [Basic usage](#basic-usage)
+- [Browser Compatibility](#browser-compatibility)
 - [Installation](#installation)
 - [Advanced usage](#advanced-usage)
   * [Create a droppable element](#create-a-droppable-element)
@@ -56,6 +57,13 @@ droppable.onFilesDropped((files) => {
 // Clean up when you're done!
 droppable.destroy();
 ````
+
+## Browser Compatibility
+
+| ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| ✔                                                                                 | ✔                                                                                    | 10+ ✔                                                                                                                        | ✔                                                                              | ✔                                                                                 | ✔                                                                           |
+
 
 ## Installation
 
@@ -204,7 +212,6 @@ The `destroy` function not only removes all of them but also the onFilesDropped 
 ```typescript
 droppable.destroy();
 ```
-
 
 ## Development
 
