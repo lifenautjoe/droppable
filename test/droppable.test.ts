@@ -488,6 +488,22 @@ describe('Droppable', () => {
 
                     expect(mockFn).toHaveBeenCalled();
                 });
+
+                it('should call this.element.blur()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(element, 'blur');
+
+                    droppable['promptForFiles'] = () => {};
+
+                    const keyDownEvent = new KeyboardEvent('keydown', { keyCode: 13 });
+                    droppable['onElementKeyDown'](keyDownEvent);
+
+                    expect(mockFn).toHaveBeenCalled();
+                });
             });
 
             describe('when the key is not enter', () => {
