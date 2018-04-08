@@ -59,12 +59,12 @@ export default class Droppable {
         return input;
     }
 
-    private static addAccessibilityAttributesToDroppableElement(element) {
+    private static addAccessibilityAttributesToDroppableElement(element: any) {
         element.tabIndex = 0;
         element.role = 'button';
     }
 
-    private static removeAccessibilityAttributesToDroppableElement(element) {
+    private static removeAccessibilityAttributesToDroppableElement(element: any) {
         delete element.role;
         element.removeAttribute('tabIndex');
     }
@@ -157,7 +157,7 @@ export default class Droppable {
         if (this.isClickable) this.promptForFiles();
     }
 
-    private onElementKeyDown(e: Event) {
+    private onElementKeyDown(e: { [key: string]: any }) {
         if (e['keyCode'] === Droppable.ENTER_KEY_CODE) {
             this.promptForFiles();
         }
