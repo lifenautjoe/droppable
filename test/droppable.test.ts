@@ -222,7 +222,7 @@ describe('Droppable', () => {
                     element
                 });
 
-                expect(mockFn).toHaveBeenCalled();
+                expect(mockFn).toHaveBeenCalledWith(element);
 
                 mockFn.mockRestore();
             });
@@ -768,6 +768,22 @@ describe('Droppable', () => {
         });
 
         describe('destroy()', () => {
+            it('should call removeAccessibilityAttributesToDroppableElement(this.element)', () => {
+                const mockFn = jest.spyOn(Droppable, 'removeAccessibilityAttributesToDroppableElement').mockImplementation(() => {});
+
+                const element = document.createElement('div');
+
+                const droppable = new Droppable({
+                    element
+                });
+
+                droppable.destroy();
+
+                expect(mockFn).toHaveBeenCalledWith(element);
+
+                mockFn.mockRestore();
+            });
+
             it('should call the elementEventsRemover', () => {
                 const element = document.createElement('div');
                 const droppable = new Droppable({
