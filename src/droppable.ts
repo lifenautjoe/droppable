@@ -65,8 +65,8 @@ export default class Droppable {
     }
 
     private static removeAccessibilityAttributesToDroppableElement(element) {
-        delete element.tabIndex;
         delete element.role;
+        element.removeAttribute('tabIndex');
     }
 
     onFilesDropped(listener: FilesWereDroppedEventListener): EventRemover {

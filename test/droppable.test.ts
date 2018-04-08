@@ -24,6 +24,61 @@ describe('Droppable', () => {
                 expect(inputElement.style.display).toBe('none');
             });
         });
+
+        describe('addAccessibilityAttributesToDroppableElement(element)', () => {
+            it('should add the tabindex attribute to the given element', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element.tabIndex).toBeDefined();
+            });
+
+            it('should set the tabindex attribute of the given element to 0', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element.tabIndex).toBe(0);
+            });
+
+            it('should add the role attribute to the given element', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element['role']).toBeDefined();
+            });
+
+            it('should set the role attribute of the given element to button', () => {
+                const element = document.createElement('div');
+
+                Droppable['addAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element['role']).toBe('button');
+            });
+        });
+
+        describe('removeAccessibilityAttributesToDroppableElement(element)', () => {
+            it('should set the tabindex attribute of the given element to -1', () => {
+                const element = document.createElement('div');
+                element.tabIndex = 0;
+
+                Droppable['removeAccessibilityAttributesToDroppableElement'](element);
+
+                // Note: For some reason when calling deleteAttribute('tabIndex'), it is set to -1...
+                expect(element.tabIndex).toBe(-1);
+            });
+
+            it('should remove the role attribute of the given element', () => {
+                const element = document.createElement('div');
+                element['role'] = 'button';
+
+                Droppable['removeAccessibilityAttributesToDroppableElement'](element);
+
+                expect(element['role']).toBeUndefined();
+            });
+        });
     });
 
     describe('instance', () => {
