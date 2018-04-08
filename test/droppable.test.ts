@@ -507,9 +507,47 @@ describe('Droppable', () => {
             });
         });
 
-        describe('onElementFocus()', () => {});
+        describe('onElementFocus()', () => {
+            it('should call registerElementEventsWithDictionary(this.element,{keydown:this.onElementKeyDown}) and store the result in this.elementKeyDownEventRemover', () => {
+                const fakeEventRemover = () => {};
 
-        describe('onElementFocusOut()', () => {});
+                let callConfig;
+
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+                const mockFn = jest.spyOn(droppable, 'registerElementEventsWithDictionary');
+
+                mockFn.mockImplementation((element, config) => {
+                    callConfig = config;
+                    return fakeEventRemover;
+                });
+
+                droppable['onElementFocus']();
+
+                expect(mockFn).toHaveBeenCalled();
+                expect(callConfig['keydown']).toEqual(droppable['onElementKeyDown']);
+                expect(droppable['elementKeyDownEventRemover']).toEqual(fakeEventRemover);
+            });
+        });
+
+        describe('onElementFocusOut()', () => {
+            it('should call this.elementKeyDownEventRemover()', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element
+                });
+
+                const mockFn = jest.fn();
+
+                droppable['elementKeyDownEventRemover'] = mockFn;
+
+                droppable['onElementFocusOut']();
+
+                expect(mockFn).toHaveBeenCalled();
+            });
+        });
 
         describe('onElementClick()', () => {
             describe('when isClickable is true', () => {
