@@ -11,6 +11,8 @@ A javascript library to give file dropping super-powers to any HTML element.
 - [Basic usage](#basic-usage)
 - [Browser Compatibility](#browser-compatibility)
 - [Installation](#installation)
+  * [npm](#npm)
+  * [Scripts](#scripts)
 - [Advanced usage](#advanced-usage)
   * [Create a droppable element](#create-a-droppable-element)
   * [Listen for dropped files](#listen-for-dropped-files)
@@ -71,9 +73,21 @@ droppable.destroy();
 
 ## Installation
 
+### npm
+
 ```bash
 npm install droppable
 ```
+
+### Scripts
+
+The library can also be included as a standalone script.
+
+See the /dist directory for the available options.
+
+### Script files
+
+The library can also be installed 
 
 ## Advanced usage
 
