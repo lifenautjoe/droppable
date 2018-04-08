@@ -157,8 +157,8 @@ export default class Droppable {
         if (this.isClickable) this.promptForFiles();
     }
 
-    private onElementKeyDown(e) {
-        if (e.keyCode === Droppable.ENTER_KEY_CODE) {
+    private onElementKeyDown(e: Event) {
+        if (e['keyCode'] === Droppable.ENTER_KEY_CODE) {
             this.promptForFiles();
         }
     }

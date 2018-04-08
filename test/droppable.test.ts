@@ -473,6 +473,44 @@ describe('Droppable', () => {
             });
         });
 
+        describe('onElementKeyDown(e)', () => {
+            describe('when the key is enter', () => {
+                it('should call promptForFiles()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(droppable, 'promptForFiles');
+
+                    const keyDownEvent = new KeyboardEvent('keydown', { keyCode: 13 });
+                    droppable['onElementKeyDown'](keyDownEvent);
+
+                    expect(mockFn).toHaveBeenCalled();
+                });
+            });
+
+            describe('when the key is not enter', () => {
+                it('should not call promptForFiles()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = spyOn(droppable, 'promptForFiles');
+
+                    const keyDownEvent = new KeyboardEvent('keydown', { keyCode: 14 });
+                    droppable['onElementKeyDown'](keyDownEvent);
+
+                    expect(mockFn).not.toHaveBeenCalled();
+                });
+            });
+        });
+
+        describe('onElementFocus()', () => {});
+
+        describe('onElementFocusOut()', () => {});
+
         describe('onElementClick()', () => {
             describe('when isClickable is true', () => {
                 it('should call promptForFiles()', () => {
