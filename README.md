@@ -24,6 +24,9 @@ A javascript library to give file dropping super-powers to any HTML element.
   * [Enable append CSS class when files are dragged on element](#enable-append-css-class-when-files-are-dragged-on-element)
   * [Disable append CSS class when files are dragged on element](#disable-append-css-class-when-files-are-dragged-on-element)
   * [Destroy](#destroy)
+- [FAQ](#faq)
+  * [My droppable element has a border around it when focused](#my-droppable-element-has-a-border-around-it-when-focused)
+  * [I want to add a style to my droppable element when focused](#i-want-to-add-a-style-to-my-droppable-element-when-focused)
 - [Development](#development)
   * [Clone the repository](#clone-the-repository)
 
@@ -212,6 +215,32 @@ The `destroy` function not only removes all of them but also the onFilesDropped 
 
 ```typescript
 droppable.destroy();
+```
+
+## FAQ
+
+### My droppable element has a border around it when focused
+
+The library makes the droppable elements accesible, this means that they can get focused by the user.
+
+Your browser by default adds an outline to the focused items. To remove it, in your css:
+
+```css
+    #your-droppable-item:focus{
+        outline: 0;
+    }
+
+```
+
+### I want to add a style to my droppable element when focused
+
+In your css:
+
+```css
+    #your-droppable-item:focus:not(:active){
+        // Here you can do anything! For example adding a shadow
+        box-shadow: 0 0 0 0.125em rgba(111, 14, 217, 0.25);
+    }
 ```
 
 ## Development
