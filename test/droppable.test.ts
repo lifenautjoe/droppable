@@ -213,6 +213,20 @@ describe('Droppable', () => {
                 mockFn.mockRestore();
             });
 
+            it('should call addAccessibilityAttributesToDroppableElement(config.element)', () => {
+                const mockFn = jest.spyOn(Droppable, 'addAccessibilityAttributesToDroppableElement').mockImplementation(() => {});
+
+                const element = document.createElement('div');
+
+                new Droppable({
+                    element
+                });
+
+                expect(mockFn).toHaveBeenCalled();
+
+                mockFn.mockRestore();
+            });
+
             it('should have default config values', () => {
                 const element = document.createElement('div');
                 const droppable = new Droppable({
