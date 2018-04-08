@@ -89,10 +89,6 @@ The library is also available as a standalone script in multiple formats.
 
 You can find more versions in the [releases page](https://github.com/lifenautjoe/droppable/releases).
 
-### Script files
-
-The library can also be installed 
-
 ## Advanced usage
 
 ### Create a droppable element
