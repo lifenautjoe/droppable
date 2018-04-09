@@ -50,13 +50,14 @@ Well now you can!  🎉
 
 ## Usecases
 
-When files get dropped or selected into your element you will retrieve them as [File](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. This means **the sky's the limit with what you can do with the dropped files!**
+When files get dropped or selected into your element you will retrieve them as [File](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. This means **you can do anything you want with the dropped/selected files!**
 
-Concrete examples? Sure thing.
+Still not excited about the library? Here are some concrete things you can do with the files.
 
-* Upload the dropped/selected file/s to the server using JavaScript (e.g. chat, file chunking, file sharing)
-* Edit the dropped/selected file/s (e.g. Text editor, image editor)
-* Analyze the dropped/selected file/s (e.g. syntax validator, file stats)
+* Upload them using JavaScript (e.g. chat, file chunking, file sharing)
+* Edit them! (e.g. Text editor, image editor)
+* Inspect them! (e.g. syntax validator, file stats)
+* Encrypt them! ([Oh yes you can](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt))
 
 ## Basic usage
 
