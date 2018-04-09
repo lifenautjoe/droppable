@@ -8,6 +8,7 @@ A javascript library to give file dropping super-powers to any HTML element.
 
 - [Motivation](#motivation)
 - [Features](#features)
+- [Usecases](#usecases)
 - [Basic usage](#basic-usage)
 - [Browser Compatibility](#browser-compatibility)
 - [Installation](#installation)
@@ -34,7 +35,7 @@ A javascript library to give file dropping super-powers to any HTML element.
 
 ## Motivation
 
-Wouldn't it be great if you could drop files in any HTML element allowing you to style the item however you like?
+Wouldn't it be great if you could drop files in any HTML element?
 
 Well now you can!  🎉
 
@@ -46,6 +47,16 @@ Well now you can!  🎉
 * Zero dependencies
 * Tiny! (~4 KB Minified)
 * Accessibility support
+
+## Usecases
+
+When files get dropped or selected into your element you will retrieve them as [File](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. This means **the sky's the limit with what you can do with the dropped files!**
+
+Concrete examples? Sure thing.
+
+* Upload the dropped/selected file/s to the server using JavaScript (e.g. chat, file chunking, file sharing)
+* Edit the dropped/selected file/s (e.g. Text editor, image editor)
+* Analyze the dropped/selected file/s (e.g. syntax validator, file stats)
 
 ## Basic usage
 
