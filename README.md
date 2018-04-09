@@ -52,12 +52,12 @@ Well now you can!  🎉
 
 When files get dropped or selected into your element you will retrieve them as [File](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. This means **you can do anything you want with the dropped/selected files!**
 
-Still not excited about the library? Here are some concrete things you can do with the files.
+Here are some concrete usecases.
 
-* Upload them using JavaScript (e.g. chat, file chunking, file sharing)
-* Edit them! (e.g. Text editor, image editor)
-* Inspect them! (e.g. syntax validator, file stats)
-* Encrypt them! ([Oh yes you can](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt))
+* Upload the files (e.g. chat media/attachment, file chunking, file sharing)
+* Edit the files (e.g. Text editor, image editor)
+* Inspect the files (e.g. syntax validator, file stats)
+* Encrypt the files ([Yes you can](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt))
 
 ## Basic usage
 
