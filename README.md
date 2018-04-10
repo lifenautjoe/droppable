@@ -9,6 +9,7 @@ A javascript library to give file dropping super-powers to any HTML element.
 - [Motivation](#motivation)
 - [Features](#features)
 - [Usecases](#usecases)
+- [Demo](#demo)
 - [Basic usage](#basic-usage)
 - [Browser Compatibility](#browser-compatibility)
 - [Installation](#installation)
@@ -58,6 +59,10 @@ Here are some concrete usecases.
 * Edit the files (e.g. Text editor, image editor)
 * Inspect the files (e.g. syntax validator, file stats)
 * Encrypt the files ([Yes you can](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt))
+
+## Demo
+
+You can see the library in action [here](https://lifenautjoe.github.io/droppable/).
 
 ## Basic usage
 
