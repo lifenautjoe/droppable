@@ -209,8 +209,9 @@ export default class Droppable {
         const eventRemovers: Array<Function> = [];
         Object.keys(eventNameToEventListenerDictionary).forEach(eventName => {
             const eventListener = eventNameToEventListenerDictionary[eventName];
-            element.addEventListener(eventName, eventListener.bind(this));
-            eventRemovers.push(() => element.removeEventListener(eventName, eventListener));
+            const boundEventListener = eventListener.bind(this);
+            element.addEventListener(eventName, boundEventListener);
+            eventRemovers.push(() => element.removeEventListener(eventName, boundEventListener));
         });
 
         return () => eventRemovers.forEach(eventRemover => eventRemover());
