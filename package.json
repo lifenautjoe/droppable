@@ -73,6 +73,10 @@
             "/test/",
             "/dist/"
         ],
+        "testPathIgnorePatterns": [
+            "/node_modules/",
+            "/dist/"
+        ],
         "coverageThreshold": {
             "global": {
                 "branches": 90,
