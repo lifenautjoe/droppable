@@ -98,13 +98,9 @@ npm install droppable
 
 ### Scripts
 
-The library is also available as a standalone script in multiple formats.
+The library is also available as a standalone script in multiple formats (UMD, ES5, ES6 ...).
 
-* [Universal Module Definition Script](https://github.com/lifenautjoe/droppable/releases/download/2.1.1/droppable.umd.js)
-* [ES5 Script](https://github.com/lifenautjoe/droppable/releases/download/2.1.1/droppable.es5.js)
-* [ES6 Script](https://github.com/lifenautjoe/droppable/releases/download/2.1.1/droppable.js)
-
-You can find more versions in the [releases page](https://github.com/lifenautjoe/droppable/releases).
+You can get the latest version from `/dist` or the stable one from the [releases page](https://github.com/lifenautjoe/droppable/releases).
 
 ## Advanced usage
 
