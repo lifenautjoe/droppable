@@ -163,8 +163,9 @@ var Droppable = /** @class */ (function () {
         var eventRemovers = [];
         Object.keys(eventNameToEventListenerDictionary).forEach(function (eventName) {
             var eventListener = eventNameToEventListenerDictionary[eventName];
-            element.addEventListener(eventName, eventListener.bind(_this));
-            eventRemovers.push(function () { return element.removeEventListener(eventName, eventListener); });
+            var boundEventListener = eventListener.bind(_this);
+            element.addEventListener(eventName, boundEventListener);
+            eventRemovers.push(function () { return element.removeEventListener(eventName, boundEventListener); });
         });
         return function () { return eventRemovers.forEach(function (eventRemover) { return eventRemover(); }); };
     };
