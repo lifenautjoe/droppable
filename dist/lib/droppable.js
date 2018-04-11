@@ -128,7 +128,8 @@ var Droppable = /** @class */ (function () {
         });
     };
     Droppable.prototype.onElementFocusOut = function () {
-        this.elementKeyDownEventRemover();
+        if (this.elementKeyDownEventRemover)
+            this.elementKeyDownEventRemover();
     };
     Droppable.prototype.onVirtualInputElementChange = function (e) {
         this.onDroppableElementChange(e);
