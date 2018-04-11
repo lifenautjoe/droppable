@@ -549,19 +549,34 @@ describe('Droppable', () => {
         });
 
         describe('onElementFocusOut()', () => {
-            it('should call this.elementKeyDownEventRemover()', () => {
-                const element = document.createElement('div');
-                const droppable = new Droppable({
-                    element
+            describe('when this.elementKeyDownEventRemover is defined', () => {
+                it('should call this.elementKeyDownEventRemover()', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    const mockFn = jest.fn();
+
+                    droppable['elementKeyDownEventRemover'] = mockFn;
+
+                    droppable['onElementFocusOut']();
+
+                    expect(mockFn).toHaveBeenCalled();
                 });
+            });
 
-                const mockFn = jest.fn();
-
-                droppable['elementKeyDownEventRemover'] = mockFn;
-
-                droppable['onElementFocusOut']();
-
-                expect(mockFn).toHaveBeenCalled();
+            describe('when this.elementKeyDownEventRemover is not defined', () => {
+                it('should not throw an error', () => {
+                    const element = document.createElement('div');
+                    const droppable = new Droppable({
+                        element
+                    });
+                    delete droppable['elementKeyDownEventRemover'];
+                    expect(() => {
+                        droppable['onElementFocusOut']();
+                    }).not.toThrow();
+                });
             });
         });
 
