@@ -171,7 +171,7 @@ export default class Droppable {
     }
 
     private onElementFocusOut() {
-        this.elementKeyDownEventRemover();
+        if (this.elementKeyDownEventRemover) this.elementKeyDownEventRemover();
     }
 
     private onVirtualInputElementChange(e: Event) {
