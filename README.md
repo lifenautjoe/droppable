@@ -137,7 +137,7 @@ const latestDroppedFiles = droppable.getLatestDroppedFiles();
 ```
 
 ### Trigger prompt for files
-Sometimes you will want to prompt the user for files without him dropping files or clicking the element.
+Sometimes you will want to prompt the user for files without they dropping files or clicking the element.
 ```typescript
 droppable.promptForFiles();
 ```
