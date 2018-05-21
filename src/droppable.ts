@@ -137,19 +137,25 @@ export default class Droppable {
     private onElementDragOver(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.add(this.dragOverClass);
+        if (this.appendStatusClasses) {
+            this.element.classList.add(this.dragOverClass);
+        }
     }
 
     private onElementDragLeave(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.remove(this.dragOverClass);
+        if (this.appendStatusClasses) {
+            this.element.classList.remove(this.dragOverClass);
+        }
     }
 
     private onElementDrop(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.remove(this.dragOverClass);
+        if (this.appendStatusClasses) {
+            this.element.classList.remove(this.dragOverClass);
+        }
         this.onDroppableElementChange(e);
     }
 
