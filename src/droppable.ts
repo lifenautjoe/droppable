@@ -9,7 +9,7 @@
 export default class Droppable {
     private static ENTER_KEY_CODE = 13;
 
-    private dragOverClass = 'dragover';
+    private dragOverClass: string;
 
     private appendStatusClasses: boolean;
     private isClickable: boolean;
@@ -40,6 +40,8 @@ export default class Droppable {
         const isClickable = typeof config.isClickable === 'boolean' ? config.isClickable : true;
         const acceptsMultipleFiles = typeof config.acceptsMultipleFiles === 'boolean' ? config.acceptsMultipleFiles : true;
         const appendStatusClasses = typeof config.appendStatusClasses === 'boolean' ? config.appendStatusClasses : true;
+
+        this.dragOverClass = typeof config.dragOverClass === 'string' ? config.dragOverClass : 'dragover';
 
         this.setIsClickable(isClickable);
         this.setAcceptsMultipleFiles(acceptsMultipleFiles);
@@ -220,6 +222,7 @@ export default class Droppable {
 
 export interface DroppableSettings {
     element: HTMLElement;
+    dragOverClass?: string;
     appendStatusClasses?: boolean;
     acceptsMultipleFiles?: boolean;
     isClickable?: boolean;

@@ -6,7 +6,6 @@
  */
 var Droppable = /** @class */ (function () {
     function Droppable(config) {
-        this.dragOverClass = 'dragover';
         this.onFilesDroppedEventListeners = [];
         config = config || {};
         if (!config.element) {
@@ -17,6 +16,7 @@ var Droppable = /** @class */ (function () {
         var isClickable = typeof config.isClickable === 'boolean' ? config.isClickable : true;
         var acceptsMultipleFiles = typeof config.acceptsMultipleFiles === 'boolean' ? config.acceptsMultipleFiles : true;
         var appendStatusClasses = typeof config.appendStatusClasses === 'boolean' ? config.appendStatusClasses : true;
+        this.dragOverClass = typeof config.dragOverClass === 'string' ? config.dragOverClass : 'dragover';
         this.setIsClickable(isClickable);
         this.setAcceptsMultipleFiles(acceptsMultipleFiles);
         this.setAppendStatusClasses(appendStatusClasses);
