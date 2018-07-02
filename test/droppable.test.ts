@@ -681,6 +681,18 @@ describe('Droppable', () => {
 
                 expect(element.classList.contains(droppable['dragOverClass'])).toBe(true);
             });
+
+            it('should not add the dragOverClass to the element if appendStatusClasses is disabled', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element,
+                    appendStatusClasses: false
+                });
+
+                droppable['onElementDragOver'](fakeEvent);
+
+                expect(element.classList.contains(droppable['dragOverClass'])).toBe(false);
+            });
         });
 
         describe('onElementDragLeave(event)', () => {

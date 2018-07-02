@@ -103,7 +103,9 @@ var Droppable = /** @class */ (function () {
     Droppable.prototype.onElementDragOver = function (e) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.add(this.dragOverClass);
+        if (this.appendStatusClasses) {
+            this.element.classList.add(this.dragOverClass);
+        }
     };
     Droppable.prototype.onElementDragLeave = function (e) {
         e.preventDefault();

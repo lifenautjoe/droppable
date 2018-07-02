@@ -139,7 +139,10 @@ export default class Droppable {
     private onElementDragOver(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.add(this.dragOverClass);
+
+        if (this.appendStatusClasses) {
+            this.element.classList.add(this.dragOverClass);
+        }
     }
 
     private onElementDragLeave(e: Event) {
