@@ -137,6 +137,29 @@ describe('Droppable', () => {
                 });
             });
 
+            describe('config.dragOverClass', () => {
+                it('should set the root property dragOverClass to the given value', () => {
+                    const element = document.createElement('div');
+
+                    const droppable = new Droppable({
+                        element,
+                        dragOverClass: 'moon'
+                    });
+
+                    expect(droppable.dragOverClass).toBe('moon');
+                });
+
+                it('should set the root property dragOverClass to dragover when not givem', () => {
+                    const element = document.createElement('div');
+
+                    const droppable = new Droppable({
+                        element
+                    });
+
+                    expect(droppable.dragOverClass).toBe('dragover');
+                });
+            });
+
             describe('when config.isClickable is given', () => {
                 it('should call setIsClickable() with the given value', () => {
                     const mockFn = jest.spyOn(Droppable.prototype, 'setIsClickable');
@@ -657,6 +680,18 @@ describe('Droppable', () => {
                 droppable['onElementDragOver'](fakeEvent);
 
                 expect(element.classList.contains(droppable['dragOverClass'])).toBe(true);
+            });
+
+            it('should not add the dragOverClass to the element if appendStatusClasses is disabled', () => {
+                const element = document.createElement('div');
+                const droppable = new Droppable({
+                    element,
+                    appendStatusClasses: false
+                });
+
+                droppable['onElementDragOver'](fakeEvent);
+
+                expect(element.classList.contains(droppable['dragOverClass'])).toBe(false);
             });
         });
 

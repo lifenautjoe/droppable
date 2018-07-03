@@ -43,6 +43,7 @@ export default class Droppable {
 }
 export interface DroppableSettings {
     element: HTMLElement;
+    dragOverClass?: string;
     appendStatusClasses?: boolean;
     acceptsMultipleFiles?: boolean;
     isClickable?: boolean;
