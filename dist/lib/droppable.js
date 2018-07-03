@@ -8,7 +8,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var Droppable = /** @class */ (function () {
     function Droppable(config) {
-        this.dragOverClass = 'dragover';
         this.onFilesDroppedEventListeners = [];
         config = config || {};
         if (!config.element) {
@@ -19,6 +18,7 @@ var Droppable = /** @class */ (function () {
         var isClickable = typeof config.isClickable === 'boolean' ? config.isClickable : true;
         var acceptsMultipleFiles = typeof config.acceptsMultipleFiles === 'boolean' ? config.acceptsMultipleFiles : true;
         var appendStatusClasses = typeof config.appendStatusClasses === 'boolean' ? config.appendStatusClasses : true;
+        this.dragOverClass = typeof config.dragOverClass === 'string' ? config.dragOverClass : 'dragover';
         this.setIsClickable(isClickable);
         this.setAcceptsMultipleFiles(acceptsMultipleFiles);
         this.setAppendStatusClasses(appendStatusClasses);
@@ -99,7 +99,9 @@ var Droppable = /** @class */ (function () {
     Droppable.prototype.onElementDragOver = function (e) {
         e.preventDefault();
         e.stopPropagation();
-        this.element.classList.add(this.dragOverClass);
+        if (this.appendStatusClasses) {
+            this.element.classList.add(this.dragOverClass);
+        }
     };
     Droppable.prototype.onElementDragLeave = function (e) {
         e.preventDefault();
