@@ -102,7 +102,7 @@ export default class Droppable {
     }
 
     setAcceptsMultipleFiles(acceptsMultipleFiles: boolean) {
-        this.virtualInputElement.setAttribute('multiple', acceptsMultipleFiles.toString());
+        if(acceptsMultipleFiles) this.virtualInputElement.setAttribute('multiple', '');
     }
 
     setAppendStatusClasses(appendStatusClasses: boolean) {
